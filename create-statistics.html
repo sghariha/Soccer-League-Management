@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Statistics</title>
+  <meta charset="utf-8" />
+
+  <link rel="stylesheet" href="bootstrap.css" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <!-- Remove this comment when done -->
+  <div class="container container-index" id="cont">
+
+    <h3 style="margin-top: 50px;">Create Statistics</h3>
+    <h5>Add/edit individual player statistics using the roster</h5>
+    <div class="row">
+      <div class="col-sm-2">
+      </div>
+      <div class="col-sm-8">
+        <form class="form-div">
+            <h6 id="warning"></h6>
+            <div class="form-group">
+            <label>Win/Loss</label><br>
+              <select id="winorloss" class="custom-select mb-2 mr-sm-2 mb-sm-0" name="options">
+                <option value="win">Win</option>
+                <option value="loss">Loss</option>
+                <option value="tie">Tie</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Home Score</label>
+              <input id="homescore" type="number" class="form-control" placeholder="Points">
+            </div>
+            <div class="form-group">
+              <label>Opponent Score</label>
+              <input id="awayscore" type="number" class="form-control" placeholder="Points">
+            </div>
+            <div class="form-group">
+              <label>Fouls</label>
+              <input id="fouls" type="number" class="form-control" placeholder="Fouls">
+            </div>
+            <div class="form-group">
+              <label>Cards</label>
+              <input id="cards" type="number" class="form-control" placeholder="Cards">
+            </div>
+            <div class="form-group">
+              <label>Shots on Goal</label>
+              <input id="shotsongoal" type="number" class="form-control" placeholder="Shots">
+            </div>
+            <div class="form-group">
+              <label>Goals Made</label>
+              <input id="goalsmade" type="number" class="form-control" placeholder="Goals">
+            </div>
+            <div class="form-group">
+              <label>Corner Kicks</label>
+              <input id="cornerkicks" type="number" class="form-control" placeholder="Corner Kicks">
+            </div>
+            <div class="form-group">
+              <label>Goal Kicks</label>
+              <input id="goalkicks" type="number" class="form-control" placeholder="Goal Kicks">
+            </div>
+            <div class="form-group">
+              <label>Possession Time (minutes)</label>
+              <input id="posstime" type="number" class="form-control" placeholder="Possession Time">
+            </div>
+
+            <div class="form-group text-center">
+              <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="addstats()">
+            </div>
+            <div class="form-group">
+              <h6 align="center"><a href="statistics-admin.html">Exit</a></h6>
+            </div>
+        </form>
+      </div>
+      <div class="col-sm-4">
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="create-statistics.js"></script>
+</body>
+</html>

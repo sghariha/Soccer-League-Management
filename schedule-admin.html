@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Schedule</title>
+  <meta charset="utf-8" />
+
+
+  <link rel="stylesheet" href="bootstrap.css" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <!-- Remove this comment when done -->
+  <div class="container container-index" id="schedule-container">
+    <nav class="navbar">
+      <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+          <a  id="nav_a" class="nav-link" href="statistics-admin.html"><img src="bar-chart.svg" /></a>
+        </li>
+        <li class="nav-item">
+          <a id="nav_b" class="nav-link active" href="schedule-admin.html"><img src="calendar.svg" /></a>
+        </li>
+        <li class="nav-item">
+          <a id="nav_c" class="nav-link" href="roster-admin.html"><img src="listing-option.svg" /></a>
+        </li>
+      </ul>
+    </nav>
+    <div id ="main_text">
+
+      <!-- Page Name -->
+      <h3>Schedule</h3>
+
+      <div class="row schedule-head">
+        <div class="col-2 hidden">
+          <a href="#" id="stats-done">Done</a>
+        </div>
+        <div class="col-2 visible">
+          <a href="#" id="stats-edit">Edit</a>
+        </div>
+        <div class="col-2 visible">
+          <a href="#" id="stats-filter"></a>
+        </div>
+
+        <div class="col-12 hidden less-top-1">
+          <a href="create-event.html" id="stats-add"><img src="plus.svg" /></a>
+        </div>
+      </div>
+
+      <template id="eventrow">
+      <hr class="visible-2" />
+      <div class="row top-row">
+        <div class="col-2 hidden">
+          <a href="#" onclick="deleteEvent(this)"><img src="remove.svg"/></a>
+          <a class="remove-button" style="display:none;"></a>
+          <a href="#" class="pencil" onclick="displayedit(this)"><img src="pencil.svg" /></a>
+        </div>
+        <!--
+        Left:
+        - date
+        - Day of the week
+        -->
+        <div class="col-2 mid">
+          <h6 class="event-date"></h6>
+          <h6 class="event-day"></h6>
+        </div>
+
+        <!--
+        Right:
+        - title
+        - location
+        - time
+
+        -->
+        <div class="col-10 right">
+          <h5 class="title"></h5>
+          <span class="location"></span>
+          <span class="time"></span>
+
+        </div>
+      </div>
+      </template>
+
+
+    </div>
+  </div>
+
+  <script src="schedule.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

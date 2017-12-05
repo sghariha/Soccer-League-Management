@@ -1,0 +1,293 @@
+/*@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,900');*/
+
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600,700');
+/*
+
+
+
+font-family: 'Work Sans', sans-serif;
+
+
+font-family: 'Nunito Sans', sans-serif;
+*/
+
+html, body {
+	padding: 0;
+	width: 100%;
+	height: 100%
+}
+
+h1, h2, h3, h4, h5, h6, p, span, a, input, textarea {
+	font-family: 'Work Sans', sans-serif;
+	color: black;
+}
+
+.imageholder {
+	margin-top: 4em;
+	margin-bottom: 4em
+}
+.login {
+	margin-top: 1em;
+	padding: 0.5em 1em 0.5em 1em;
+	background-color: #FFC80A;
+	border-radius: 34px;
+		-moz-border-radius: 34px;
+		-webkit-border-radius: 34px;
+	border: 2px solid #FFC80A;
+	color: black
+}
+.padded-div {
+	margin-top: 4em
+}
+.form-div {
+	padding-left: 3em;
+	padding-right: 3em
+}
+a {
+	color: inherit;
+}
+
+/*
+ul {
+	margin-top: 2em;
+	margin-bottom: 2em !important;
+	border-radius: 34px;
+		-moz-border-radius: 34px;
+		-webkit-border-radius: 34px;
+	border: 2px solid #FFC80A;
+}
+
+li {
+	width: 30vw
+}
+
+
+.nav li a {
+	color: #9FA3A7
+}
+.nav li .active, .nav li .active:focus, .nav li .active:hover {
+	color: #000 !important;
+	background-color:#FFC80A !important;
+  	border-radius:1.2em;
+}
+*/
+hr {
+  margin: 20px 0;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #FFC80A;
+  margin: 1em 0;
+  padding: 0;
+}
+.edit {
+	float: right;
+	background-color: #FFC80A;
+	border-radius: 34px;
+		-moz-border-radius: 34px;
+		-webkit-border-radius: 34px;
+	border: 2px solid #FFC80A;
+	color: black;
+	margin-bottom: 1em;
+	margin-right: 1em
+}
+.add {
+	float: right
+}
+.imageholder {
+	margin-top: 4em;
+	margin-bottom: 4em
+}
+.form-check {
+	margin-top: 4em
+}
+.signup-div {
+	position: relative;
+	overflow-y: auto;
+}
+select {
+	display: inline;
+}
+
+/* Style for index.html */
+.container-index {
+	background-color: white;
+
+}
+.navbar {
+	background-color: white;
+	padding: 0;
+	width: 100%;
+}
+ul {
+	margin-top: 1em;
+	margin-bottom: 2em !important;
+	border-radius: 34px;
+		-moz-border-radius: 34px;
+		-webkit-border-radius: 34px;
+	border: 2px solid #FFC80A;
+	width: 100%;
+}
+
+li {
+	width: 33%;
+}
+
+li img {
+	height: 20px;
+}
+
+.nav li .active, .nav li .active:focus, .nav li .active:hover {
+	color: #000 !important;
+	background-color:#FFC80A !important;
+  	border-radius:1.2em;
+}
+.container {
+	@media (max-width: 991px) {
+		background-color: yellow;
+	}
+}
+
+@media (min-width: 991px) {
+	.container {
+		width: 800px;
+	}
+}
+
+/* Styles for pages */
+
+.dropdown .btn {
+	border-radius: 2em;
+	background-color: #FFC80A;
+}
+
+.statistics-game {
+	margin-top: 80px;
+	font-weight: 900;
+}
+
+.playerprofile {
+	display: none;
+	margin-top: 2em
+}
+
+.statrow {
+	display: none;
+	margin-top: 2em
+}
+
+.rosteradd {
+	margin-top: 2em;
+	margin-bottom: 2em
+}
+
+.rounded-circle {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+.playernumber {
+	display: none;
+}
+
+.playerposition, .playerheight, .playerweight, .editplayer, .deleteplayer {
+	display: inline-block;
+	margin-right: 1em
+}
+
+.playernameheader {
+	margin-bottom: 1em;
+	text-decoration: underline;
+}
+
+
+.main_text {
+	width: 100%;
+}
+
+.less-top-1 {
+	margin-top:10px;
+	margin-bottom:20px;
+}
+
+/* Universal start */
+h6, h5{
+	font-weight: 600;
+}
+h3 {
+	font-weight: 700;
+}
+span, input, select, textarea {
+	font-size: .83em !important;
+	margin-right: 10px;
+}
+
+span {
+		color: rgba(0, 0, 0, 0.5);
+}
+
+.pencil {
+	margin-left: 5px;
+}
+
+.page-title-2 {
+	margin-top: 40px;
+}
+
+.top-row {
+	margin-top: 20px;
+}
+
+.form-left {
+	text-align: right;
+
+}
+textarea {
+	width: 100%;
+	height: 100px;
+	resize:none;
+}
+/* Universal end */
+
+
+/* Style for schedule */
+
+.schedule-head  {
+	margin-bottom: -5px;
+	margin-top:40px;
+	color:#FFC80A;
+}
+
+.hidden {
+	display: none;
+}
+
+#schedule-container img {
+	height: 20px;
+}
+
+
+.event-date {
+	margin-bottom: 5px;
+	margin-top: 2px;
+}
+
+.title {
+	margin-bottom: 0;
+}
+
+.time-input {
+	width: 120px;
+}
+
+/* Style for schedule -- end */
+
+.morestats, .addstats, .editstats {
+	display: inline-block;
+	margin-right: 1em;
+	margin-bottom: 1em
+}
+
+.editbtn, .addbtn {
+	margin-left: 1em;
+}
