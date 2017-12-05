@@ -12,105 +12,76 @@
   <!-- Remove this comment when done -->
   <div class="container container-index">
 
-    <h3 class="page-title-2">Edit Event</h3>
-    <br />
-    <form>
-      <h6 id="warning"></h6>
-      <!-- Row -->
-      <div class="row top-row">
-        <div class="col-3 form-left">
-          <h6>Event</h6>
-        </div>
-        <div class="col-9">
-          <select class="form-control" id="event-type" onchange="changeEvent(this)">
-            <option id="game" value="game">Game</option>
-            <option id="practice" value="practice">Practice</option>
-            <option id="other" value="other">Other</option>
-          </select>
-        </div>
+    <h3 class="page-title-2">Create Event</h3>
+    <div class="row form-row">
+      <div class="col align-self-center">
+        <form>
+          <h6 id="warning"></h6>
+          <!-- Row -->
+          <div class="form-group">
+              <label>Event</label>
+
+              <select class="form-control" id="event-type" onchange="changeEvent(this)">
+                <option value="game">Game</option>
+                <option value="practice">Practice</option>
+                <option value="other">Other</option>
+              </select>
+
+          </div>
+
+          <!-- Team Option -->
+          <div class="form-group" id="team-option">
+              <label>Team</label>
+              <input type="text" class="form-control" id="opponent" placeholder="Enter opponent's name">
+          </div>
+
+          <!-- Other Option -->
+          <div class="form-group" style="display:none;" id="other-option">
+              <label style="">Title</label>
+              <input type="text" class="form-control" id="title" placeholder="Add a short, clear name">
+          </div>
+
+          <!-- Row -->
+          <div class="form-group">
+              <label>Location</label>
+              <input type="text" class="form-control" id="location" placeholder="Enter a place or address">
+          </div>
+          <!-- Row -->
+          <div class="form-group">
+              <label class="visible">Date / Time</label>
+
+              <label class="hidden">Start</label>
+              <br />
+              <input type="date" class="time-input" id="start-date">
+              <input type="time" class="time-input" id="start-time">
+              <br /><br />
+              <a href="#" id="end-time" class="visible"> + End time</a>
+          </div>
+          <div class="form-group">
+              <label class="hidden">End</label>
+              <br />
+              <input type="date" class="hidden time-input" id="end-date">
+              <input type="time" class="hidden time-input" id="end_time">
+              <br /><br />
+              <a href="#" id="remove-time" class="hidden"> Remove</a>
+          </div>
+          <!-- Row -->
+          <div class="form-group">
+              <label>Notes</label>
+              <textarea id="notes" class="form-control" placeholder="Tell the team more about the event."></textarea>
+          </div>
+          <div class="form-group save-exit text-center">
+              <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="editevent()">
+            </div>
+          <div class="form-group exit text-center">
+              <label><a href="schedule-admin.html">Exit</a></label>
+          </div>
+        </form>
+        
       </div>
+    </div>
+    
 
-      <!-- Team Option -->
-      <div class="row top-row" id="team-option">
-        <div class="col-3 form-left">
-          <h6>Team</h6>
-        </div>
-        <div class="col-9">
-          <input type="text" class="form-control" id="opponent" placeholder="Enter opponent's name">
-        </div>
-      </div>
-
-      <!-- Other Option -->
-      <div class="row top-row" style="display:none;" id="other-option">
-        <div class="col-3 form-left">
-          <h6>Title</h6>
-        </div>
-        <div class="col-9">
-          <input type="text" class="form-control" id="title" placeholder="Add a short, clear name">
-        </div>
-      </div>
-
-
-      <!-- Row -->
-      <div class="row top-row">
-        <div class="col-3 form-left">
-          <h6>Location</h6>
-        </div>
-        <div class="col-9">
-          <input type="text" class="form-control" id="location" placeholder="Enter a place or address">
-        </div>
-      </div>
-
-      <!-- Row -->
-      <div class="row top-row">
-        <div class="col-3 form-left">
-          <h6 class="visible">Date / Time</h6>
-          <h6 class="hidden">Start</h6>
-        </div>
-        <div class="col-9">
-          <input type="date" class="time-input" id="start-date">
-          <input type="time" class="time-input" id="start-time">
-          <a href="#" id="end-time" class="visible"> + End time</a>
-        </div>
-      </div>
-
-
-      <div class="row" style="margin-top: 20px;">
-        <div class="col-3" style="text-align:right;">
-          <h6 class="hidden">End</h6>
-        </div>
-        <div class="col-9">
-          <input type="date" class="hidden time-input" id="end-date">
-          <input type="time" class="hidden time-input" id="end_time">
-          &nbsp;
-          <a href="#" id="remove-time" class="hidden"> Remove</a>
-        </div>
-      </div>
-
-      <!-- Row -->
-      <div class="row top-row">
-        <div class="col-3 form-left">
-          <h6>Notes</h6>
-        </div>
-        <div class="col-9">
-          <textarea id="notes" class="form-control" placeholder="Tell the team more about the event."></textarea>
-        </div>
-      </div>
-
-
-
-
-
-
-      <div class="row top-row">
-        <div class="col-2 offset-3">
-          <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="addEvent()">
-          <h6 style="margin: 10px 0 0 35px;"><a href="schedule-admin.html">Exit</a></h6>
-        </div>
-      </div>
-
-
-    </form>
   </div>
 
   <script src="edit-event.js"></script>

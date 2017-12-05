@@ -8373,17 +8373,13 @@ a.text-dark:focus, a.text-dark:hover {
 }
 /*# sourceMappingURL=bootstrap.css.map */
 
-/*@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,900');*/
+
+
+
 
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600,700');
 /*
-
-
-
 font-family: 'Work Sans', sans-serif;
-
-
-font-family: 'Nunito Sans', sans-serif;
 */
 
 html, body {
@@ -8392,7 +8388,7 @@ html, body {
 	height: 100%
 }
 
-h1, h2, h3, h4, h5, h6, p, span, a, input, textarea {
+h1, h2, h3, h4, h5, h6, p, span, a, textarea {
 	font-family: 'Work Sans', sans-serif;
 	color: black;
 }
@@ -8412,40 +8408,13 @@ h1, h2, h3, h4, h5, h6, p, span, a, input, textarea {
 	color: black
 }
 .padded-div {
-	margin-top: 4em
-}
-.form-div {
-	padding-left: 3em;
-	padding-right: 3em
+	margin-top: 4em;
 }
 a {
 	color: inherit;
 }
 
-/*
-ul {
-	margin-top: 2em;
-	margin-bottom: 2em !important;
-	border-radius: 34px;
-		-moz-border-radius: 34px;
-		-webkit-border-radius: 34px;
-	border: 2px solid #FFC80A;
-}
 
-li {
-	width: 30vw
-}
-
-
-.nav li a {
-	color: #9FA3A7
-}
-.nav li .active, .nav li .active:focus, .nav li .active:hover {
-	color: #000 !important;
-	background-color:#FFC80A !important;
-  	border-radius:1.2em;
-}
-*/
 hr {
   margin: 20px 0;
   display: block;
@@ -8531,7 +8500,7 @@ li img {
 
 /* Styles for pages */
 
-.dropdown .btn {
+.btn {
 	border-radius: 2em;
 	background-color: #FFC80A;
 }
@@ -8585,6 +8554,9 @@ li img {
 	margin-bottom:20px;
 }
 
+h6 {
+  font-size: .83em;
+}
 /* Universal start */
 h6, h5{
 	font-weight: 600;
@@ -8597,7 +8569,7 @@ span, input, select, textarea {
 	margin-right: 10px;
 }
 
-span {
+span, input {
 		color: rgba(0, 0, 0, 0.5);
 }
 
@@ -8666,3 +8638,50 @@ textarea {
 .editbtn, .addbtn {
 	margin-left: 1em;
 }
+
+
+.login-container {
+  height: 100vh;
+  padding-top: 15vh;
+}
+.login-row {
+  margin-top: 20px;
+}
+.login-row1 {
+  margin-top: 50px;
+}
+
+input.btn{
+  font-weight: 600 !important;
+}
+
+input.form-control {
+  color: red;
+}
+
+
+.form-div {
+  padding: 0 !important;
+}
+
+.form-group h6 {
+  margin: 25px 0 0 0;
+}
+
+.form-row {
+  margin-top: 50px;
+}
+label {
+  font-size: .83em;
+  font-weight: 600;
+}
+
+.save-exit {
+  margin-top: 40px;
+}
+
+.exit {
+  margin-bottom: 80px;
+}
+
+/* end of everything */

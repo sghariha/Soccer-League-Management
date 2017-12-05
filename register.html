@@ -9,111 +9,67 @@
 	<script type="text/javascript" src="register.js"></script>
 </head>
 <body>
-	<div class="container">
-
+	<div class="container signup-div">
 		<h3 class="page-title-2">Sign up</h3>
-    <br />
-
-		<form>
-
-
-			<div class="row top-row">
-        <div class="col-3 form-left">
-          <h6>Account Type</h6>
-        </div>
-        <div class="col-9">
-					<select id="mySelect" class="custom-select mb-2 mr-sm-2 mb-sm-0" name="options" onchange="change(this)">
-							<option value="player">Player</option>
-							<option value="admin-existing-team">Admin for existing team</option>
-							<option value="admin-new-team">Admin for new team</option>
-						</select>
-        </div>
-      </div>
-
-
-			<!--  -->
-			<div class="row top-row">
-				<div class="col-3 form-left">
-					<h6>Username</h6>
-				</div>
-				<div class="col-9">
-					<input id="username" type="text" class="form-control" placeholder="Username">
-				</div>
-			</div>
-
-			<div class="row top-row">
-				<div class="col-3 form-left">
-					<h6>Email</h6>
-				</div>
-				<div class="col-9">
+		<div class="row form-row">
+			<div class="col align-self-center">
+				
+				<form class="form-div">
+					<h6 id="warning"></h6>
+					<div class="form-group">
+						<label>Account Type</label><br />
+						<select id="mySelect" class="custom-select mb-2 mr-sm-2 mb-sm-0" name="options" onchange="change(this)">
+    						<option value="player">Player</option>
+    						<option value="admin-existing-team">Admin for existing team</option>
+    						<option value="admin-new-team">Admin for new team</option>
+  						</select>
+					</div>
+				 	<div class="form-group">
+				 		<label>Username</label>
+				    	<input id="username" type="text" class="form-control" placeholder="Username">
+				  	</div>
+				  	<div class="form-group">
+				  		<label>Email</label>
 				    	<input id="email" type="text" class="form-control" placeholder="example@email.com">
-				</div>
+				  	</div>
+				  	<div class="form-group">
+				  		<label>Password</label>
+				    	<input id="password" type="password" class="form-control" placeholder="Password">
+				  	</div>
+				  	<div class="form-group">
+				  		<label>Confirm Password</label>
+				    	<input type="password" class="form-control" placeholder="Confirm Password">
+				  	</div>
+				  	<div id="existing-team-signup" class="group">
+				  		<div class="form-group">
+				  			<label>Team</label>
+				    		<input id="team-existing" type="text" class="form-control" placeholder="Team">
+				  		</div>
+				  	</div>
+					<div id="new-team-signup" class="group">
+						<div class="form-group">
+							<label>Team</label>
+				    		<input id="team-new" type="text" class="form-control" placeholder="Team">
+				 		</div>
+				 		<div class="form-group">
+				 			<label>City</label>
+				    		<input type="text" class="form-control" placeholder="City">
+				 		</div>
+				 		<div class="form-group">
+				 			<label>School</label>
+				    		<input type="text" class="form-control" placeholder="School">
+				 		</div>
+					</div>
+				  	<div class="form-group save-exit text-center">
+				    	<input type="button" value="Register" class="btn btn-primary login" onclick="register()">
+				  	</div>
+				  	<div class="form-group text-center exit">
+				  		<label><a href="login.html" style="padding: 0; margin: 0;">Exit</a></label>
+				  	</div>
+				</form>
 			</div>
 
-
-			<div class="row top-row">
-				<div class="col-3 form-left">
-					<h6>Password</h6>
-				</div>
-				<div class="col-9">
-					<input id="password" type="password" class="form-control" placeholder="Password">
-				</div>
-			</div>
-
-			<div class="row top-row">
-				<div class="col-3 form-left">
-					<h6>Confirm Password</h6>
-				</div>
-				<div class="col-9">
-				    <input type="password" class="form-control" placeholder="Confirm Password">
-				</div>
-			</div>
-
-
-			<div class="row top-row" id="existing-team-signup">
-				<div class="col-3 form-left">
-					<h6>Team</h6>
-				</div>
-				<div class="col-9">
-					<input id="team-existing" type="text" class="form-control" placeholder="Team">
-				</div>
-			</div>
-
-			<!-- New Sign up -->
-			<div class="row top-row new-team hidden">
-				<div class="col-3 form-left">
-					<h6>Team</h6>
-				</div>
-				<div class="col-9">
-					<input id="team-new" type="text" class="form-control" placeholder="Team">
-				</div>
-			</div>
-
-			<div class="row top-row new-team hidden">
-				<div class="col-3 form-left">
-					<h6>City</h6>
-				</div>
-				<div class="col-9">
-					<input type="text" class="form-control" placeholder="City">
-				</div>
-			</div>
-
-			<div class="row top-row new-team hidden">
-				<div class="col-3 form-left">
-					<h6>School</h6>
-				</div>
-				<div class="col-9">
-					<input type="text" class="form-control" placeholder="School">
-				</div>
-			</div>
-
-			<div class="row top-row">
-        <div class="col-2 offset-3">
-          <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="register()">
-          <h6 style="margin: 10px 0 0 35px;"><a href="login.html">Exit</a></h6>
-        </div>
-      </div>
-		</form>
+		</div>
 	</div>
 </body>
 </html>

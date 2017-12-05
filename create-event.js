@@ -37,16 +37,16 @@ function changeEvent(obj) {
   var selected = select.options[select.selectedIndex].value;
 
   if(selected === "game") {
-    document.getElementById('team-option').style.display = "flex";
+    document.getElementById('team-option').style.display = "block";
     document.getElementById('other-option').style.display = "none";
   }
   else if(selected == "other") {
     document.getElementById('team-option').style.display = "none";
-    document.getElementById('other-option').style.display = "flex";
+    document.getElementById('other-option').style.display = "block";
   }
   else {
     document.getElementById('team-option').style.display = "none";
-    document.getElementById('other-option').style.display = "flex";
+    document.getElementById('other-option').style.display = "block";
   }
 }
 
