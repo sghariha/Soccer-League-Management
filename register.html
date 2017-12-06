@@ -4,26 +4,15 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Sign Up</title>
-
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
-	<script type="text/javascript" src="register.js"></script>
 </head>
 <body>
 	<div class="container signup-div">
 		<h3 class="page-title-2">Sign up</h3>
 		<div class="row form-row">
 			<div class="col align-self-center">
-				
 				<form class="form-div">
 					<h6 id="warning"></h6>
-					<div class="form-group">
-						<label>Account Type</label><br />
-						<select id="mySelect" class="custom-select mb-2 mr-sm-2 mb-sm-0" name="options" onchange="change(this)">
-    						<option value="player">Player</option>
-    						<option value="admin-existing-team">Admin for existing team</option>
-    						<option value="admin-new-team">Admin for new team</option>
-  						</select>
-					</div>
 				 	<div class="form-group">
 				 		<label>Username</label>
 				    	<input id="username" type="text" class="form-control" placeholder="Username">
@@ -38,12 +27,29 @@
 				  	</div>
 				  	<div class="form-group">
 				  		<label>Confirm Password</label>
-				    	<input type="password" class="form-control" placeholder="Confirm Password">
+				    	<input id="confirmpassword" type="password" class="form-control" placeholder="Confirm Password">
 				  	</div>
+				  	<nav class="navbar">
+				      <ul class="nav nav-pills nav-fill">
+				        <li class="nav-item active">
+				          <a id="nav_existing" class="nav-link active" onclick="showExistingTeam()">Join Existing Team</a>
+				        </li>
+				        <li class="nav-item">
+				          <a id="nav_new" class="nav-link" onclick="showNewTeam()">Create New Team</a>
+				        </li>
+				      </ul>
+				    </nav>
 				  	<div id="existing-team-signup" class="group">
 				  		<div class="form-group">
-				  			<label>Team</label>
-				    		<input id="team-existing" type="text" class="form-control" placeholder="Team">
+				  			<label>Team</label></br>
+			              	<select id="jointeam" class="custom-select mb-2 mr-sm-2 mb-sm-0" name="options">
+			              	</select>
+				  		</div>
+				  		<div class="form-group save-exit text-center">
+				    		<input type="button" value="Register" class="btn btn-primary login" onclick="registerExisting()">
+				  		</div>
+				  		<div class="form-group text-center exit">
+				  			<label><a href="login.html" style="padding: 0; margin: 0;">Exit</a></label>
 				  		</div>
 				  	</div>
 					<div id="new-team-signup" class="group">
@@ -59,17 +65,19 @@
 				 			<label>School</label>
 				    		<input type="text" class="form-control" placeholder="School">
 				 		</div>
+				 		<div class="form-group save-exit text-center">
+				    		<input type="button" value="Register" class="btn btn-primary login" onclick="registerNew()">
+				  		</div>
+				  		<div class="form-group text-center exit">
+				  			<label><a href="login.html" style="padding: 0; margin: 0;">Exit</a></label>
+				  		</div>
 					</div>
-				  	<div class="form-group save-exit text-center">
-				    	<input type="button" value="Register" class="btn btn-primary login" onclick="register()">
-				  	</div>
-				  	<div class="form-group text-center exit">
-				  		<label><a href="login.html" style="padding: 0; margin: 0;">Exit</a></label>
-				  	</div>
 				</form>
 			</div>
 
 		</div>
 	</div>
 </body>
+<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+<script type="text/javascript" src="register.js"></script>
 </html>
