@@ -12,7 +12,7 @@
 		<div class="row form-row">
 			<div class="col align-self-center">
 				<form class="form-div">
-					<h6 id="warning"></h6>
+					<h6 id="warningregister"></h6>
 				 	<div class="form-group">
 				 		<label>Username</label>
 				    	<input id="username" type="text" class="form-control" placeholder="Username">
@@ -79,5 +79,25 @@
 	</div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
-<script type="text/javascript" src="register.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript">
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('new-team-signup').style.display = "none";
+    var team = [];
+    var query = database.ref("teams").orderByKey();
+	query.once("value")
+	.then(function(snapshot) {
+    	snapshot.forEach(function(childSnapshot) {
+      		team.push(childSnapshot.key);
+      		console.log(team);
+      		var x = document.getElementById("jointeam");
+			var option = document.createElement("option");
+			option.text = childSnapshot.key;
+			option.value = childSnapshot.key;
+			x.add(option, x[0]);
+  		});
+	});
+});
+</script>
 </html>
