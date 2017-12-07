@@ -1,3 +1,5 @@
+
+
 if(!localStorage.getItem("teamwins")) {
   localStorage.setItem("teamwins", "0");
   localStorage.setItem("teamlosses", "0");
@@ -77,20 +79,20 @@ for (var i = 1; i <= count; i++) {
     tmpl.querySelector('.time').innerHTML = time;
 
     if(!localStorage.getItem("winorloss" + i.toString())) {
-      tmpl.querySelector('.editbtn').style.display = 'none'; 
+      tmpl.querySelector('.editbtn').style.display = 'none';
     }
     else {
-      tmpl.querySelector('.addbtn').style.display = 'none'; 
+      tmpl.querySelector('.addbtn').style.display = 'none';
       if(localStorage.getItem("winorloss" + i.toString()) === "win") {
-        tmpl.querySelector('.overallscore').innerHTML = "W: " + localStorage.getItem("homescore" + i.toString()) + " - " + 
+        tmpl.querySelector('.overallscore').innerHTML = "W: " + localStorage.getItem("homescore" + i.toString()) + " - " +
       localStorage.getItem("awayscore" + i.toString());
       }
       else if(localStorage.getItem("winorloss" + i.toString()) === "loss") {
-        tmpl.querySelector('.overallscore').innerHTML = "L: " + localStorage.getItem("homescore" + i.toString()) + " - " + 
+        tmpl.querySelector('.overallscore').innerHTML = "L: " + localStorage.getItem("homescore" + i.toString()) + " - " +
       localStorage.getItem("awayscore" + i.toString());
       }
       else {
-        tmpl.querySelector('.overallscore').innerHTML = "T: " + localStorage.getItem("homescore" + i.toString()) + " - " + 
+        tmpl.querySelector('.overallscore').innerHTML = "T: " + localStorage.getItem("homescore" + i.toString()) + " - " +
       localStorage.getItem("awayscore" + i.toString());
       }
     }
@@ -160,7 +162,7 @@ function editstats(element) {
 function deleteEvent(element) {
   var num = element.nextElementSibling.innerHTML;
   console.log(num);
-  
+
   localStorage.removeItem("event-type" + num);
   if(localStorage.getItem("opponent" + num)) {
     localStorage.removeItem("opponent" + num);
@@ -194,10 +196,10 @@ function deleteEvent(element) {
         teamties = teamties - 1;
       }
 
-      teamgoalsfor = teamgoalsfor - 
+      teamgoalsfor = teamgoalsfor -
       parseInt(localStorage.getItem("homescore" + num), 10);
 
-      teamgoalsagainst = teamgoalsagainst - 
+      teamgoalsagainst = teamgoalsagainst -
       parseInt(localStorage.getItem("awayscore" + num), 10);
 
       localStorage.setItem("teamwins", teamwins.toString());

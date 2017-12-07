@@ -8,6 +8,13 @@
   <link rel="stylesheet" href="bootstrap.css" />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+  <script src="main.js"></script>
+  <script>
+  loadEditStats();
+  </script>
+
+
 </head>
 <body>
   <!-- Remove this comment when done -->
@@ -15,9 +22,7 @@
     <h3 style="margin-top: 50px;">Edit Statistics</h3>
     <h5>Add/edit individual player statistics using the roster</h5>
     <div class="row">
-      <div class="col-sm-2">
-      </div>
-      <div class="col-sm-8">
+      <div class="col align-self-center">
         <form class="form-div">
             <h6 id="warning"></h6>
             <div class="form-group">
@@ -65,15 +70,13 @@
               <input id="posstime" type="number" class="form-control" placeholder="Possession Time">
             </div>
 
-            <div class="form-group text-center">
-              <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="editstats()">
+            <div class="form-group text-center save-exit">
+              <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="editStats()">
             </div>
-            <div class="form-group">
+            <div class="form-group exit">
               <h6 align="center"><a href="statistics-admin.html">Exit</a></h6>
             </div>
         </form>
-      </div>
-      <div class="col-sm-4">
       </div>
     </div>
 

@@ -4,55 +4,54 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login</title>
-
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
-	<script type="text/javascript" src="login.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+
 </head>
 <body>
 	<div class="container login-container">
 		<div class="row">
 			<div class="col align-self-center" style="text-align: center;">
-							<img src="soccer-ball.png" alt="soccer ball">
+				<img src="soccer-ball.png" alt="soccer ball">
 			</div>
 		</div>
-				<form id="loginform">
-					<div class="row login-row1">
-						<div class="col-md-6 offset-md-3">
-							<h6 id="warning"></h6>
-							<div class="form-group">
-									<input type="text" id="username" class="form-control" placeholder="Username or email">
-								</div>
-							<div class="form-group">
-								<input type="password" id="password" class="form-control password" placeholder="Password">
-							</div>
-						</div>
+		<form id="loginform">
+			<div class="row login-row1">
+				<div class="col-md-6 offset-md-3">
+					<h6 id="warning"></h6>
+					<div class="form-group">
+						<input type="text" id="username" class="form-control" placeholder="Username or email">
 					</div>
-					
-					<div class="row login-row">
-						<div class="col-md-3 offset-md-3 col align-self-end">
-							<div id="submitdiv" class="form-group">
-								<label class="form-check-label">
-										<input id="rememberme" type="checkbox" class="form-check-input">
-										Remember Me
-								</label>
-							</div>
-						</div>
-						<div class="col-md-3 col align-self-end">
-							<div class="form-group text-center">
-								<input type="button" value="Log in" class="btn btn-primary login" onclick="login()" style="width: 100%;">
-							</div>
-						</div>
-					
+					<div class="form-group">
+						<input type="password" id="password" class="form-control password" placeholder="Password">
 					</div>
-					
-					<div class="row login-row">
-						<div class="col align-self-center">
-							<div class="form-group">
-								<h6 align="center"><a href="register.html">Sign up</a></h6>
-							</div>
-						</div>
+				</div>
+			</div>
+
+			<div class="row login-row">
+				<div class="col-md-3 offset-md-3 col align-self-end">
+					<div id="submitdiv" class="form-group">
+						<label class="form-check-label">
+							<input id="rememberme" type="checkbox" class="form-check-input">
+							Remember Me
+						</label>
 					</div>
-				</form>
+				</div>
+				<div class="col-md-3 col align-self-end">
+					<div class="form-group text-center">
+						<input type="button" value="Log in" class="btn btn-primary login" onclick="loginFire()" style="width: 100%;">
+					</div>
+				</div>
+			</div>
+			<div class="row login-row">
+				<div class="col align-self-center">
+					<div class="form-group">
+						<h6 align="center"><a href="register.html">Sign up</a></h6>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
 </body>
 </html>

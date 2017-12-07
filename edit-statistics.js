@@ -22,10 +22,10 @@ function editstats() {
 		storage = true;
 	}
 	if(storage === true) {
-		if(document.getElementById("winorloss").value && document.getElementById("homescore").value && 
-			document.getElementById("awayscore").value && document.getElementById("fouls").value && 
-			document.getElementById("cards").value && document.getElementById("shotsongoal").value && 
-			document.getElementById("goalsmade").value && document.getElementById("cornerkicks").value && 
+		if(document.getElementById("winorloss").value && document.getElementById("homescore").value &&
+			document.getElementById("awayscore").value && document.getElementById("fouls").value &&
+			document.getElementById("cards").value && document.getElementById("shotsongoal").value &&
+			document.getElementById("goalsmade").value && document.getElementById("cornerkicks").value &&
 			document.getElementById("goalkicks").value && document.getElementById("posstime").value) {
 
 			var teamwins = parseInt(localStorage.getItem("teamwins"), 10);
@@ -66,12 +66,12 @@ function editstats() {
 					}
 				}
 			}
-			teamgoalsfor = teamgoalsfor - 
-			parseInt(localStorage.getItem("homescore" + (localStorage.getItem("editingstatsfor"))), 10) + 
+			teamgoalsfor = teamgoalsfor -
+			parseInt(localStorage.getItem("homescore" + (localStorage.getItem("editingstatsfor"))), 10) +
 			parseInt(document.getElementById("homescore").value, 10);
 
-			teamgoalsagainst = teamgoalsagainst - 
-			parseInt(localStorage.getItem("awayscore" + (localStorage.getItem("editingstatsfor"))), 10) + 
+			teamgoalsagainst = teamgoalsagainst -
+			parseInt(localStorage.getItem("awayscore" + (localStorage.getItem("editingstatsfor"))), 10) +
 			parseInt(document.getElementById("awayscore").value, 10);
 
 			gamenum = localStorage.getItem("editingstatsfor");
