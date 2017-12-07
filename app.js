@@ -9,24 +9,6 @@ var config = {
   firebase.initializeApp(config);
   var database = firebase.database();
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('new-team-signup').style.display = "none";
-    var team = [];
-    var query = database.ref("teams").orderByKey();
-	query.once("value")
-	.then(function(snapshot) {
-    	snapshot.forEach(function(childSnapshot) {
-      		team.push(childSnapshot.key);
-      		console.log(team);
-      		var x = document.getElementById("jointeam");
-			var option = document.createElement("option");
-			option.text = childSnapshot.key;
-			option.value = childSnapshot.key;
-			x.add(option, x[0]);
-  		});
-	});
-});
-
 function showExistingTeam() {
 	document.getElementById('new-team-signup').style.display = "none";
 	document.getElementById('existing-team-signup').style.display = "block";
@@ -54,17 +36,19 @@ function registerExisting() {
 	document.getElementById('password').value && document.getElementById('confirmpassword').value) {
 		if(document.getElementById('password').value === document.getElementById('confirmpassword').value) {
 			firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value, 
-			document.getElementById('password').value).catch(function(error) {
+			document.getElementById('password').value).then(function(result) {
+				var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
+				firebase.database().ref('users').update({[storedEmail] : document.getElementById('jointeam').value});
+				window.location = "login.html";
+			}).catch(function(error) {
   				var errorCode = error.code;
   				var errorMessage = error.message;
-  				document.getElementById("warning").innerHTML = "Ensure email is valid and if password is at least 6 characters!";
+  				document.getElementById("warningregister").innerHTML = "Ensure email is valid and if password is at least 6 characters!";
   				return false;
 			});
-			var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
-			firebase.database().ref('users').update({[storedEmail] : document.getElementById('jointeam').value})
 		}
 		else {
-			document.getElementById("warning").innerHTML = "Passwords do not match!";
+			document.getElementById("warningregister").innerHTML = "Passwords do not match!";
 		}
 	}
 }
@@ -79,63 +63,38 @@ function registerNew() {
 				var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
 				firebase.database().ref('users').update({[storedEmail] : document.getElementById('team-new').value});
 				firebase.database().ref('teams/' + document.getElementById('team-new').value).update({teamname : document.getElementById('team-new').value});
+				window.location = "login.html";
 			}).catch(function(error) {
   				var errorCode = error.code;
   				var errorMessage = error.message;
-  				document.getElementById("warning").innerHTML = "Ensure email is valid and if password is at least 6 characters!";
+  				document.getElementById("warningregister").innerHTML = "Ensure email is valid and if password is at least 6 characters!";
   				return false;
 			});
 		}
 		else {
-			document.getElementById("warning").innerHTML = "Passwords do not match!";
+			document.getElementById("warningregister").innerHTML = "Passwords do not match!";
 		}
 	}
 }
 
-/*
-function change(obj) {
-	var select = obj;
-	var selected = select.options[select.selectedIndex].value;
-
-	if(selected === "player" || selected === "admin-existing-team") {
-    var elements2 = document.getElementsByClassName('new-team');
-    for(var i=0; i < elements2.length; i++) {
-      elements2[i].style.display = 'none';
-    }
-		document.getElementById('existing-team-signup').style.display = 'flex';
-	}
-	else {
-    var elements2 = document.getElementsByClassName('new-team');
-    for(var i=0; i < elements2.length; i++) {
-      elements2[i].style.display = 'flex';
-    }
-		document.getElementById('existing-team-signup').style.display = "none";
-	}
+function login() {
+	firebase.auth().signInWithEmailAndPassword(document.getElementById('usernamelogin').value, 
+	document.getElementById('passwordlogin').value).then(function(result) {
+		window.location = "statistics-admin.html";
+	}).catch(function(error) {
+  		var errorCode = error.code;
+  		var errorMessage = error.message;
+  		document.getElementById("warninglogin").innerHTML = "Incorrect login!";
+  		return false;
+	});
 }
 
-function register() {
-	var storage = false;
-	var selected = document.getElementById("mySelect").value;
-	if(typeof(Storage) !== "undefined") {
-		storage = true;
+function displayUser() {
+	var user = firebase.auth().currentUser;
+	var email;
+
+	if (user != null) {
+	  email = user.email;
+	  console.log(email);
 	}
-	if(storage === true) {
-		localStorage.setItem("username", document.getElementById("username").value);
-		localStorage.setItem("email", document.getElementById("email").value);
-		localStorage.setItem("password", document.getElementById("password").value);
-		if(selected === "player") {
-			localStorage.setItem("accounttype", "player");
-			localStorage.setItem("team", document.getElementById("team-existing").value);
-		}
-		else if(selected === "admin-new-team") {
-			localStorage.setItem("accounttype", "admin");
-			localStorage.setItem("team", document.getElementById("team-new").value);
-		}
-		else {
-			localStorage.setItem("accounttype", "admin");
-			localStorage.setItem("team", document.getElementById("team-existing").value);
-		}
-	}
-	window.location = "login.html"
-	return false;
-} */
+}
