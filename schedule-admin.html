@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="bootstrap.css" />
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="jquery-3.2.1.slim.min.js"></script>
 </head>
 <body>
   <!-- Remove this comment when done -->
@@ -47,17 +47,17 @@
       </div>
 
       <template id="eventrow">
-      <hr class="visible-2" />
-      <div class="row top-row">
-        <div class="col-2 hidden">
-          <a href="#" onclick="deleteEvent(this)"><img src="remove.svg"/></a>
-          <a class="remove-button" style="display:none;"></a>
-          <a href="#" class="pencil" onclick="displayedit(this)"><img src="pencil.svg" /></a>
-        </div>
-        <!--
-        Left:
-        - date
-        - Day of the week
+        <hr class="visible-2" />
+        <div class="row top-row">
+          <div class="col-2 hidden">
+            <a href="#" onclick="deleteEvent(this)"><img src="remove.svg"/></a>
+            <a class="remove-button" style="display:none;"></a>
+            <a href="#" class="pencil" onclick="displayedit(this)"><img src="pencil.svg" /></a>
+          </div>
+          <!--
+          Left:
+          - date
+          - Day of the week
         -->
         <div class="col-2 mid">
           <h6 class="event-date"></h6>
@@ -70,48 +70,24 @@
         - location
         - time
 
-        -->
-        <div class="col-10 right">
-          <h5 class="title"></h5>
-          <span class="location"></span>
-          <span class="time"></span>
+      -->
+      <div class="col-10 right">
+        <h5 class="title"></h5>
+        <span class="location"></span>
+        <span class="time"></span>
 
-        </div>
       </div>
-      </template>
-
-
     </div>
-  </div>
+  </template>
 
 
-<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+</div>
+</div>
 
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBig_htEJTY6jZ1LpuT6DvXnrqrXaa2heY",
-    authDomain: "cse134b-527c4.firebaseapp.com",
-    databaseURL: "https://cse134b-527c4.firebaseio.com",
-    projectId: "cse134b-527c4",
-    storageBucket: "",
-    messagingSenderId: "46669459351"
-  };
-  firebase.initializeApp(config);
 
-  firebase.database().ref('/users/Raymond').once('value').then(function(snapshot) {
-     var username = (snapshot.val()) || 'Anonymous';
-     console.log(username);
-   });
-
-</script>
-
-<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
-
-  <script src="schedule.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="firebase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="bootstrap.min.js"></script>
 
 
 

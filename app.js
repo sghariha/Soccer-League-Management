@@ -1,3 +1,22 @@
+// Check if service workers are supported by user's browsers
+if ('serviceWorker' in navigator) {
+  try {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        // Register the service worker passing our service worker code
+        navigator.serviceWorker.register('/cse134b-hw5/sw.js').then((registration) => {
+          // Registration was successful
+          console.log('ServiceWorker registration successful!', registration.scope);
+        }, (err) => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  } catch (e) {
+       console.log(e) // Probably want to use some free JS error tracking tool here like Sentry
+  }
+}
+
 var config = {
     apiKey: "AIzaSyBig_htEJTY6jZ1LpuT6DvXnrqrXaa2heY",
     authDomain: "cse134b-527c4.firebaseapp.com",
@@ -498,10 +517,10 @@ function showNewTeam() {
 }
 
 function registerExisting() {
-	if(document.getElementById('username').value && document.getElementById('email').value && 
+	if(document.getElementById('username').value && document.getElementById('email').value &&
 	document.getElementById('password').value && document.getElementById('confirmpassword').value) {
 		if(document.getElementById('password').value === document.getElementById('confirmpassword').value) {
-			firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value, 
+			firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value,
 			document.getElementById('password').value).then(function(result) {
 				var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
 				firebase.database().ref('users').update({[storedEmail] : document.getElementById('jointeam').value});
@@ -520,11 +539,11 @@ function registerExisting() {
 }
 
 function registerNew() {
-	if(document.getElementById('username').value && document.getElementById('email').value && 
-	document.getElementById('password').value && document.getElementById('confirmpassword').value && 
+	if(document.getElementById('username').value && document.getElementById('email').value &&
+	document.getElementById('password').value && document.getElementById('confirmpassword').value &&
 	document.getElementById('team-new').value) {
 		if(document.getElementById('password').value === document.getElementById('confirmpassword').value) {
-			firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value, 
+			firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value,
 			document.getElementById('password').value).then(function(result) {
 				var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
 				firebase.database().ref('users').update({[storedEmail] : document.getElementById('team-new').value});
@@ -544,7 +563,7 @@ function registerNew() {
 }
 
 function login() {
-	firebase.auth().signInWithEmailAndPassword(document.getElementById('usernamelogin').value, 
+	firebase.auth().signInWithEmailAndPassword(document.getElementById('usernamelogin').value,
 	document.getElementById('passwordlogin').value).then(function(result) {
 		window.location = "statistics-admin.html";
 	}).catch(function(error) {
@@ -565,8 +584,8 @@ function displayUser() {
 }
 
 function addPlayer() {
-	if(document.getElementById("firstname").value && document.getElementById("lastname").value && 
-	document.getElementById("feet").value && document.getElementById("inches").value && 
+	if(document.getElementById("firstname").value && document.getElementById("lastname").value &&
+	document.getElementById("feet").value && document.getElementById("inches").value &&
 	document.getElementById("weight").value) {
 		var email;
 	    firebase.auth().onAuthStateChanged(function(user) {
@@ -614,7 +633,7 @@ function addPlayer() {
   					if(document.getElementById("playerapp").value) {
   						app = document.getElementById("playerapp").value;
   					}
-  					firebase.database().ref('teams/' + team + '/roster/' + document.getElementById('firstname').value + 
+  					firebase.database().ref('teams/' + team + '/roster/' + document.getElementById('firstname').value +
   						document.getElementById('lastname').value).update({
   						position : document.getElementById('position').value,
   						status : document.getElementById('status').value,
@@ -636,7 +655,7 @@ function addPlayer() {
   					});
   					window.location = "roster-admin.html";
 				});
-	    	} 
+	    	}
 	  	});
 	}
 	else {
@@ -687,8 +706,8 @@ function loadEditPlayer() {
 }
 
 function editPlayer() {
-if(document.getElementById("firstname").value && document.getElementById("lastname").value && 
-	document.getElementById("feet").value && document.getElementById("inches").value && 
+if(document.getElementById("firstname").value && document.getElementById("lastname").value &&
+	document.getElementById("feet").value && document.getElementById("inches").value &&
 	document.getElementById("weight").value) {
 		var email;
 	    firebase.auth().onAuthStateChanged(function(user) {
@@ -707,7 +726,7 @@ if(document.getElementById("firstname").value && document.getElementById("lastna
   					var ti = 0;
   					var app = 0;
   					var key = sessionStorage.getItem("edit");
-					if(document.getElementById("firstname").value + document.getElementById("lastname").value !== 
+					if(document.getElementById("firstname").value + document.getElementById("lastname").value !==
 					key) {
 						firebase.database().ref('teams/' + team + '/roster/' + key).remove();
 					}
@@ -741,7 +760,7 @@ if(document.getElementById("firstname").value && document.getElementById("lastna
   					if(document.getElementById("playerapp").value) {
   						app = document.getElementById("playerapp").value;
   					}
-  					firebase.database().ref('teams/' + team + '/roster/' + document.getElementById('firstname').value + 
+  					firebase.database().ref('teams/' + team + '/roster/' + document.getElementById('firstname').value +
   						document.getElementById('lastname').value).update({
   						position : document.getElementById('position').value,
   						status : document.getElementById('status').value,
@@ -763,7 +782,7 @@ if(document.getElementById("firstname").value && document.getElementById("lastna
   					});
   					window.location = "roster-admin.html";
 				});
-	    	} 
+	    	}
 	  	});
 	}
 	else {
