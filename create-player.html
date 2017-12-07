@@ -18,10 +18,6 @@
         <form class="form-div">
           <h6 id="warning"></h6>
             <div class="form-group">
-              <label>Profile Picture</label><br>
-              <input id="profilepic" type="file" name="profilepic" accept="image/*">
-            </div>
-            <div class="form-group">
               <label>First Name</label>
               <input id="firstname" type="text" class="form-control" placeholder="First Name">
             </div>
@@ -47,10 +43,6 @@
               </select>
             </div>
             <div class="form-group">
-              <label>D.O.B</label>
-              <input id="dob" type="date" class="form-control" placeholder="D.O.B">
-            </div>
-            <div class="form-group">
               <label>Height</label>
               <input id="feet" type="number" class="form-control" placeholder="Feet"><br>
               <input id="inches" type="number" class="form-control" placeholder="Inches">
@@ -59,7 +51,6 @@
               <label>Weight</label>
               <input id="weight" type="number" class="form-control" placeholder="Pounds">
             </div>
-
             <div class="form-group">
               <label>Fouls</label>
               <input id="playerfoul" type="number" class="form-control" placeholder="Fouls">
@@ -100,10 +91,8 @@
               <label>Appearances</label>
               <input id="playerapp" type="number" class="form-control" placeholder="Appearances">
             </div>
-
-
             <div class="form-group text-center save-exit">
-              <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="addplayer()">
+              <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="addPlayer()">
             </div>
             <div class="form-group exit">
               <h6 align="center"><a href="roster-admin.html">Exit</a></h6>
@@ -114,8 +103,9 @@
 
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="create-player.js"></script>
+  <script type="text/javascript" src="app.js"></script>
 </body>
 </html>

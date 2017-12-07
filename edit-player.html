@@ -18,10 +18,6 @@
         <form class="form-div">
           <h6 id="warning"></h6>
             <div class="form-group">
-              <label>Profile Picture</label><br>
-              <input id="profilepic" type="file" name="profilepic" accept="image/*">
-            </div>
-            <div class="form-group">
               <label>First Name</label>
               <input id="firstname" type="text" class="form-control" placeholder="First Name">
             </div>
@@ -45,10 +41,6 @@
                 <option value="backup">Backup</option>
                 <option value="injured">Injured</option>
               </select>
-            </div>
-            <div class="form-group">
-              <label>D.O.B</label>
-              <input id="dob" type="date" class="form-control" placeholder="D.O.B">
             </div>
             <div class="form-group">
               <label>Height</label>
@@ -102,7 +94,7 @@
             </div>
 
             <div class="form-group text-center save-exit">
-              <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="editplayer(this)">
+              <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="editPlayer()">
             </div>
             <div class="form-group exit">
               <label align="center"><a href="roster-admin.html">Exit</a></label>
@@ -113,8 +105,12 @@
 
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="edit-player.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script>
+    loadEditPlayer();
+  </script>
 </body>
 </html>

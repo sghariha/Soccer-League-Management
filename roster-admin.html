@@ -28,25 +28,24 @@
     <h3>Roster</h3>
     <div class="row">
       <div class="col-sm-4 rosteradd">
-        <input type="button" value="Add Player" class="btn btn-primary login" onclick="addplayer()">
+        <input type="button" value="Add Player" class="btn btn-primary login" onclick="addToRoster()">
       </div>
     </div>
-    <template id="playerrow">
+    <div id="playerrow0" class="playertemplate">
       <div class="row">
         <div class="col-sm-4 text-center">
           <img src="http://psychopy.org/_downloads/face.jpg" class="rounded-circle">
         </div>
         <div class="col-sm-8">
-          <h3 class="playernumber"></h3>
-          <h5 class="playernameheader"><a class="playername" href="#" onclick="displayprofile(this)"></a></h5>
+          <h5 class="playernameheader"><a class="playername" href="#" onclick="displayProfile(this)"></a></h5>
           <div>
             <h6 class="playerposition"></h6>
             <h6 class="playerheight"></h6>
             <h6 class="playerweight"></h6>
           </div>
           <div>
-            <input type="button" value="Edit" class="btn btn-primary login editplayer" onclick="displayedit(this)">
-            <input type="button" value="Delete" class="btn btn-primary login deleteplayer" onclick="deleteplayer(this)">
+            <input type="button" value="Edit" class="btn btn-primary login editplayer" onclick="displayEdit(this)">
+            <input type="button" value="Delete" class="btn btn-primary login deleteplayer" onclick="deletePlayer(this)">
           </div>
         </div>
       </div>
@@ -106,13 +105,15 @@
         </div>
       </div>
       <hr>
-    </template>
+    </div>
 
   </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-
 </body>
-<script type="text/javascript" src="roster.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script>
+  loadRoster();
+</script>
 </html>
