@@ -5,6 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+	<script src="main.js"></script>
 </head>
 <body>
 	<div class="container login-container">
@@ -16,15 +19,16 @@
 		<form id="loginform">
 			<div class="row login-row1">
 				<div class="col-md-6 offset-md-3">
-					<h6 id="warninglogin"></h6>
+					<h6 id="warning"></h6>
 					<div class="form-group">
-						<input type="text" id="usernamelogin" class="form-control" placeholder="Username or email">
+						<input type="text" id="username" class="form-control" placeholder="Username or email">
 					</div>
 					<div class="form-group">
-						<input type="password" id="passwordlogin" class="form-control password" placeholder="Password">
+						<input type="password" id="password" class="form-control password" placeholder="Password">
 					</div>
 				</div>
 			</div>
+
 			<div class="row login-row">
 				<div class="col-md-3 offset-md-3 col align-self-end">
 					<div id="submitdiv" class="form-group">
@@ -36,7 +40,7 @@
 				</div>
 				<div class="col-md-3 col align-self-end">
 					<div class="form-group text-center">
-						<input type="button" value="Log in" class="btn btn-primary login" onclick="login()" style="width: 100%;">
+						<input type="button" value="Log in" class="btn btn-primary login" onclick="loginFire()" style="width: 100%;">
 					</div>
 				</div>
 			</div>
@@ -50,6 +54,4 @@
 		</form>
 	</div>
 </body>
-<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
-<script type="text/javascript" src="app.js"></script>
 </html>
