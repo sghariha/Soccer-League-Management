@@ -16,7 +16,25 @@
   <!-- Remove this comment when done -->
   <div class="container container-index" id="stats-container">
     <nav class="navbar">
-      <a class="addbtn" href="#" onclick="logOff()" style="position: absolute; right: 0; top: 100px;">log off</a>
+
+      <a class="addbtn moreButton" type="button" href="#" onclick="toggleSignOut()" data-toggle="modal" data-target="#logModal"><img src="more.svg"/></a>
+
+      <div class="modal fade" id="logModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Log Off</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <a class="addbtn" href="#" onclick="logOff()">Log Off</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <ul class="nav nav-pills nav-fill">
         <li class="nav-item">
           <a  id="nav_a" class="nav-link active" href="statistics-admin.html"><img src="bar-chart.svg" /></a>
@@ -74,103 +92,105 @@
 
       <!-- Year Drop Down
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          2017
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">2016</a>
-          <a class="dropdown-item" href="#">2015</a>
-        </div>
-      </div> -->
-
-
-      <!-- Score -->
-
-      <!-- Game -->
-
-      <template id="eventrow">
-      <div class="row">
-        <div class="col-2 hidden" style="display: none;">
-          <a href="#"value="" onclick="deleteEvent(this)"><img src="remove.svg" style="height:20px;"/></a>
-          <a class="remove-button" style="display:none;"></a>
-          <a class="editbtn" href="#" onclick="editstats(this)">Edit</a>
-          <a class="addbtn" href="#" onclick="addstats(this)">Add</a>
-        </div>
-        <!--
-        Left:
-        - date
-        - Day of the week
-        -->
-        <div class="col-2 mid" style="">
-          <h6 class="event-date" style="font-weight:900; margin-bottom: 5px; margin-top: 2px;"></h6>
-          <h6 class="event-day" style="font-weight: 900;"></h6>
-        </div>
-
-        <!--
-        Right:
-        - title
-        - location
-        - time
-        -->
-        <div class="col-10 right" style="">
-          <h5 class="playernameheader"><a class="statname" href="#" onclick="displaystat(this)"></a></h5>
-          <span class="location"></span> &nbsp;
-          <span class="time"></span>
-          <h6 class="overallscore"></h6>
-        </div>
-      </div>
-      <div class="row statrow">
-        <div class="col-sm-12">
-          <table class="table table-sm">
-            <thead>
-              <tr>
-                <th scope="col">Game Statistic</th>
-                <th scope="col">Game Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Fouls</td>
-                <td class="sfoul"></td>
-              </tr>
-              <tr>
-                <td>Cards</td>
-                <td class="scards"></td>
-              </tr>
-              <tr>
-                <td>Shots on Goal</td>
-                <td class="ssog"></td>
-              </tr>
-              <tr>
-                <td>Goals</td>
-                <td class="sg"></td>
-              </tr>
-              <tr>
-                <td>Corner Kicks</td>
-                <td class="scka"></td>
-              </tr>
-              <tr>
-                <td>Goal Kicks</td>
-                <td class="sgka"></td>
-              </tr>
-              <tr>
-                <td>Possession Time</td>
-                <td class="spt"></td>
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
-      </div>
-      </template>
-
-    </div>
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      2017
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">2016</a>
+    <a class="dropdown-item" href="#">2015</a>
   </div>
-  <script src="popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="bootstrap.min.js"></script>
+</div> -->
 
-  <script>
-  loadStats();
-  </script>
+
+<!-- Score -->
+
+<!-- Game -->
+
+<template id="eventrow">
+  <div class="row">
+    <div class="col-2 hidden" style="display: none;">
+      <a href="#"value="" onclick="DSE(this)"><img src="remove.svg" style="height:20px;"/></a>
+      <a class="remove-button" style="display:none;"></a>
+      <a class="editbtn" href="#" onclick="editstats(this)">Edit</a>
+      <a class="addbtn" href="#" onclick="addstats(this)">Add</a>
+    </div>
+    <!--
+    Left:
+    - date
+    - Day of the week
+  -->
+  <div class="col-2 mid" style="">
+    <h6 class="event-date" style="font-weight:900; margin-bottom: 5px; margin-top: 2px;"></h6>
+    <h6 class="event-day" style="font-weight: 900;"></h6>
+  </div>
+
+  <!--
+  Right:
+  - title
+  - location
+  - time
+-->
+<div class="col-10 right" style="">
+  <h5 class="playernameheader"><a class="statname" href="#"></a></h5>
+  <span class="location"></span> &nbsp;
+  <span class="time"></span>
+  <h6 class="overallscore"></h6>
+  <input type="button" value="More" class="btn btn-primary login" onclick="displaystat(this)">
+  <input type="button" value="Less" style="display: none;" class="btn btn-primary login" onclick="displaystat(this)">
+</div>
+</div>
+<div class="row statrow">
+  <div class="col-sm-12">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Game Statistic</th>
+          <th scope="col">Game Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Fouls</td>
+          <td class="sfoul"></td>
+        </tr>
+        <tr>
+          <td>Cards</td>
+          <td class="scards"></td>
+        </tr>
+        <tr>
+          <td>Shots on Goal</td>
+          <td class="ssog"></td>
+        </tr>
+        <tr>
+          <td>Goals</td>
+          <td class="sg"></td>
+        </tr>
+        <tr>
+          <td>Corner Kicks</td>
+          <td class="scka"></td>
+        </tr>
+        <tr>
+          <td>Goal Kicks</td>
+          <td class="sgka"></td>
+        </tr>
+        <tr>
+          <td>Possession Time</td>
+          <td class="spt"></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+</template>
+
+</div>
+</div>
+<script src="popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="bootstrap.min.js"></script>
+
+<script>
+loadStats();
+</script>
 </body>
 </html>

@@ -26,10 +26,10 @@ var db  =firebase.firestore();
 var name, email, photoUrl, uid, emailVerified, team;
 
 function writeToFirestore() {
-db.collection('users').doc('first').set({
-  user: 'fourrrr',
-  name: 'One'
-});
+  db.collection('users').doc('first').set({
+    user: 'fourrrr',
+    name: 'One'
+  });
 }
 
 
@@ -514,29 +514,29 @@ function editStats() {
               editStatsUpdates.update(editStatsData).then(function(result) {
                 window.location = "statistics-admin.html";
               }
-              );
+            );
 
-              console.log("System 3");
-              //window.location = "statistics-admin.html";
-
-            }).catch(function(error) {
-              console.log("Error getting documents: ", error);
-            });
+            console.log("System 3");
+            //window.location = "statistics-admin.html";
 
           }).catch(function(error) {
             console.log("Error getting documents: ", error);
           });
 
-        }
-      }).catch(function(error) {
-        console.log("Error getting documents: ", error);
-      });
-    } else {
-      window.location ="login.html";
-    }
-    console.log("System 1 ");
-  });
-  console.log("System 2 ");
+        }).catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+
+      }
+    }).catch(function(error) {
+      console.log("Error getting documents: ", error);
+    });
+  } else {
+    window.location ="login.html";
+  }
+  console.log("System 1 ");
+});
+console.log("System 2 ");
 }
 
 /* end of stats js */
@@ -570,11 +570,11 @@ function loadRegister() {
     document.getElementById('new-team-signup').style.display = "none";
     db.collection("teams").get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-          var x = document.getElementById("jointeam");
-          var option = document.createElement("option");
-          option.text = doc.id;
-          option.value = doc.id;
-          x.add(option, x[0]);
+        var x = document.getElementById("jointeam");
+        var option = document.createElement("option");
+        option.text = doc.id;
+        option.value = doc.id;
+        x.add(option, x[0]);
       });
     });
   });
@@ -608,7 +608,7 @@ function registerExisting() {
     if(document.getElementById('password').value === document.getElementById('confirmpassword').value) {
       firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value,
       document.getElementById('password').value).then(function(result) {
-        var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
+        var storedEmail = document.getElementById('email').value.replace(/[^a-zA-Z0-9 ]/g,"");
         db.collection('users').doc(storedEmail).set({
           team: document.getElementById('jointeam').value,
           email: storedEmail
@@ -631,13 +631,13 @@ function registerExisting() {
 }
 
 function registerNew() {
-	if(document.getElementById('username').value && document.getElementById('email').value &&
-	document.getElementById('password').value && document.getElementById('confirmpassword').value &&
-	document.getElementById('team-new').value) {
-		if(document.getElementById('password').value === document.getElementById('confirmpassword').value) {
-			firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value,
-			document.getElementById('password').value).then(function(result) {
-        var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
+  if(document.getElementById('username').value && document.getElementById('email').value &&
+  document.getElementById('password').value && document.getElementById('confirmpassword').value &&
+  document.getElementById('team-new').value) {
+    if(document.getElementById('password').value === document.getElementById('confirmpassword').value) {
+      firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value,
+      document.getElementById('password').value).then(function(result) {
+        var storedEmail = document.getElementById('email').value.replace(/[^a-zA-Z0-9 ]/g,"");
         db.collection('users').doc(storedEmail).set({
           team: document.getElementById('team-new').value
         }).then(function(result) {
@@ -647,18 +647,18 @@ function registerNew() {
             window.location = "login.html";
           });
         });
-			}).catch(function(error) {
-  				var errorCode = error.code;
-  				var errorMessage = error.message;
-  				document.getElementById("warningregister").innerHTML = "Ensure email is valid and if password is at least 6 characters!";
-  				return false;
-			});
-		}
-		else {
-			document.getElementById("warningregister").innerHTML = "Passwords do not match!";
+      }).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        document.getElementById("warningregister").innerHTML = "Ensure email is valid and if password is at least 6 characters!";
+        return false;
+      });
+    }
+    else {
+      document.getElementById("warningregister").innerHTML = "Passwords do not match!";
       return false;
-		}
-	}
+    }
+  }
 }
 
 function login() {
@@ -685,13 +685,13 @@ function displayUser() {
 //FUNCTIONS FOR ROSTER
 
 function addPlayer() {
-	if(document.getElementById("firstname").value && document.getElementById("lastname").value &&
-	document.getElementById("feet").value && document.getElementById("inches").value &&
-	document.getElementById("weight").value) {
-		var email;
+  if(document.getElementById("firstname").value && document.getElementById("lastname").value &&
+  document.getElementById("feet").value && document.getElementById("inches").value &&
+  document.getElementById("weight").value) {
+    var email;
     firebase.auth().onAuthStateChanged(function(user) {
-    	if(user) {
-    		email = user.email.replace('.', '').replace('@', '');
+      if(user) {
+        email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
 
         db.collection("users").get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
@@ -772,11 +772,11 @@ function addPlayer() {
 }
 
 function loadEditPlayer() {
-	var edit = localStorage.getItem("editPlayer");
-	var email;
+  var edit = localStorage.getItem("editPlayer");
+  var email;
   firebase.auth().onAuthStateChanged(function(user) {
     if(user) {
-      email = user.email.replace('.', '').replace('@', '');
+      email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
       db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           var team = doc.data().team;
@@ -818,7 +818,7 @@ function editPlayer() {
     var email;
     firebase.auth().onAuthStateChanged(function(user) {
       if(user) {
-        email = user.email.replace('.', '').replace('@', '');
+        email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
 
         db.collection("users").get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
@@ -908,50 +908,66 @@ function editPlayer() {
 }
 
 function loadRoster() {
-  firebase.auth().onAuthStateChanged(function(user) {
-  	if(user) {
-      var email = user.email.replace('.', '').replace('@', '');
-      db.collection("users").get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(dc) {
-          if(dc.id === email) {
-            var team = dc.data().team;
-            var counter = 0;
-            document.getElementById('playerrow0').style.display = 'none';
-            db.collection("teams").doc(team).collection('roster').get().then(function(querySnapshot) {
-              querySnapshot.forEach(function(doc) {
-                var clone = document.getElementById('playerrow0').cloneNode(true);
-                clone.querySelector('.playername').innerHTML = doc.data().firstName + " " +
-                doc.data().lastName;
-                clone.id = doc.data().firstName + doc.data().lastName;
-                clone.querySelector('.playerposition').innerHTML = doc.data().position;
-                clone.querySelector('.playerheight').innerHTML = doc.data().feet + "' " + doc.data().inches + "\"";
-                clone.querySelector('.playerweight').innerHTML = doc.data().weight + " lbs";
-                clone.querySelector('.pfoul').innerHTML = doc.data().playerFouls;
-                clone.querySelector('.prc').innerHTML = doc.data().redCards;
-                clone.querySelector('.pyc').innerHTML = doc.data().yellowCards;
-                clone.querySelector('.psog').innerHTML = doc.data().shotsOnGoal;
-                clone.querySelector('.pg').innerHTML = doc.data().goals;
-                clone.querySelector('.pcka').innerHTML = doc.data().cornerKickAttempts;
-                clone.querySelector('.pgka').innerHTML = doc.data().goalKickAttempts;
-                clone.querySelector('.ppka').innerHTML = doc.data().penaltyKickAttempts;
-                clone.querySelector('.pti').innerHTML = doc.data().throwIns;
-                clone.querySelector('.papp').innerHTML = doc.data().appearances;
-                clone.querySelector('.editplayer').name = doc.data().firstName + doc.data().lastName;
-                clone.querySelector('.deleteplayer').name = doc.data().firstName + doc.data().lastName;
-                clone.querySelector('.playername').name = doc.data().firstName + doc.data().lastName;
-                document.getElementById('cont').appendChild(clone);
-                document.getElementById(doc.data().firstName + doc.data().lastName).style.display = 'block';
+  firebase.firestore().enablePersistence()
+  .then(function() {
+    // Initialize Cloud Firestore through firebase
+    var db = firebase.firestore();
+    firebase.auth().onAuthStateChanged(function(user) {
+      if(user) {
+        var email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
+        db.collection("users").get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(dc) {
+            if(dc.id === email) {
+              var team = dc.data().team;
+              var counter = 0;
+              document.getElementById('playerrow0').style.display = 'none';
+              db.collection("teams").doc(team).collection('roster').get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                  var clone = document.getElementById('playerrow0').cloneNode(true);
+                  clone.querySelector('.playername').innerHTML = doc.data().firstName + " " +
+                  doc.data().lastName;
+                  clone.id = doc.data().firstName + doc.data().lastName;
+                  clone.querySelector('.playerposition').innerHTML = doc.data().position;
+                  clone.querySelector('.playerheight').innerHTML = doc.data().feet + "' " + doc.data().inches + "\"";
+                  clone.querySelector('.playerweight').innerHTML = doc.data().weight + " lbs";
+                  clone.querySelector('.pfoul').innerHTML = doc.data().playerFouls;
+                  clone.querySelector('.prc').innerHTML = doc.data().redCards;
+                  clone.querySelector('.pyc').innerHTML = doc.data().yellowCards;
+                  clone.querySelector('.psog').innerHTML = doc.data().shotsOnGoal;
+                  clone.querySelector('.pg').innerHTML = doc.data().goals;
+                  clone.querySelector('.pcka').innerHTML = doc.data().cornerKickAttempts;
+                  clone.querySelector('.pgka').innerHTML = doc.data().goalKickAttempts;
+                  clone.querySelector('.ppka').innerHTML = doc.data().penaltyKickAttempts;
+                  clone.querySelector('.pti').innerHTML = doc.data().throwIns;
+                  clone.querySelector('.papp').innerHTML = doc.data().appearances;
+                  clone.querySelector('.editplayer').name = doc.data().firstName + doc.data().lastName;
+                  clone.querySelector('.deleteplayer').name = doc.data().firstName + doc.data().lastName;
+                  clone.querySelector('.playername').name = doc.data().firstName + doc.data().lastName;
+                  document.getElementById('cont').appendChild(clone);
+                  document.getElementById(doc.data().firstName + doc.data().lastName).style.display = 'block';
+                });
               });
-            });
-          }
+            }
+          });
         });
-      });
+      }
+    });
+  })
+  .catch(function(err) {
+    if (err.code == 'failed-precondition') {
+      // Multiple tabs open, persistence can only be enabled
+      // in one tab at a a time.
+      // ...
+    } else if (err.code == 'unimplemented') {
+      // The current browser does not support all of the
+      // features required to enable persistence
+      // ...
     }
   });
 }
 
 function displayEdit(element) {
-	var edit = element.name;
+  var edit = element.name;
   localStorage.setItem("editPlayer", edit);
   window.location = "edit-player.html";
   return false;
@@ -963,10 +979,10 @@ function addToRoster() {
 }
 
 function deletePlayer(element) {
-	var email;
-	firebase.auth().onAuthStateChanged(function(user) {
-  	if(user) {
-      email = user.email.replace('.', '').replace('@', '');
+  var email;
+  firebase.auth().onAuthStateChanged(function(user) {
+    if(user) {
+      email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
       db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           var team = doc.data().team;
@@ -984,13 +1000,54 @@ function deletePlayer(element) {
 }
 
 function displayProfile(element) {
-	var num = element.name;
+  var num = element.name;
   console.log(num);
-	var display = document.getElementById(num);
-	if(!display.querySelector('.playerprofile').style.display) {
-		display.querySelector('.playerprofile').style.display = 'block';
-	}
-	else {
-		display.querySelector('.playerprofile').style.display = '';
-	}
+  var display = document.getElementById(num);
+  if(!display.querySelector('.playerprofile').style.display) {
+    display.querySelector('.playerprofile').style.display = 'block';
+  }
+  else {
+    display.querySelector('.playerprofile').style.display = '';
+  }
+}
+
+
+function logOff() {
+  firebase.auth().signOut().then(function() {
+    console.log("Sign off successful");
+    window.location = "login.html";
+  }).catch(function(error) {
+    console.log("Sign off unsuccessful")
+  });
+}
+
+function DSE(element) {
+  var eventName = element.nextElementSibling.innerHTML;
+  firebase.auth().onAuthStateChanged(function(user) {
+    if(user) {
+      email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
+      db.doc("/users/"+email).get().then(function(querySnapshot) {
+        team = querySnapshot.data().team;
+
+        db.doc('teams/'+team+'/schedule/'+eventName).delete().then(function() {
+          console.log("Document successfully deleted!");
+        }).catch(function(error) {
+          console.error("Error removing document: ", error);
+        });
+      });
+    }
+  });
+}
+
+function displaystat (element) {
+  if(!element.parentElement.parentElement.nextElementSibling.style.display) {
+    element.parentElement.parentElement.nextElementSibling.style.display = 'block';
+    element.nextElementSibling.style.display = 'block';
+    element.style.display = 'none';
+  }
+  else {
+    element.parentElement.parentElement.nextElementSibling.style.display = '';
+    element.previousElementSibling.style.display = 'block';
+    element.style.display = 'none';
+  }
 }

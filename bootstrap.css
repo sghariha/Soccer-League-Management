@@ -8541,7 +8541,7 @@ li img {
 
 .playernameheader {
 	margin-bottom: 1em;
-	text-decoration: underline;
+
 }
 
 
@@ -8682,6 +8682,16 @@ label {
 
 .exit {
   margin-bottom: 80px;
+}
+
+.moreButton {
+  position: absolute;
+  right: 0px;
+  top: 87px;
+}
+
+.moreButton img {
+  height: 20px;
 }
 
 /* end of everything */
