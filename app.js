@@ -1215,8 +1215,8 @@ function editGame() {
 
 
 function editOther() {
-  if(document.getElementById('title').value && document.getElementById('location').value && 
-  document.getElementById('start-date').value && document.getElementById('start-time').value) {
+  if(document.getElementById('title').value && document.getElementById('location-prac').value && 
+  document.getElementById('start-date-prac').value && document.getElementById('start-time-prac').value) {
     var email;
 
     firebase.auth().onAuthStateChanged(function(user) {
@@ -1240,9 +1240,9 @@ function editOther() {
             db.collection("teams").doc(team).collection("events").doc(document.getElementById('start-date').value + 
             " " + document.getElementById('title').value).set({
               title: document.getElementById('title').value,
-              location: document.getElementById('location').value, 
-              startDate: document.getElementById('start-date').value,
-              startTime: document.getElementById('start-time').value,
+              location: document.getElementById('location-prac').value, 
+              startDate: document.getElementById('start-date-prac').value,
+              startTime: document.getElementById('start-time-prac').value,
               type: type
             }).then(function(result) {
               window.location = "schedule-admin.html";
@@ -1257,4 +1257,8 @@ function editOther() {
     document.getElementById("warning").innerHTML = "Please fill out all event information!";
     return false;
   }
+}
+
+function deleteEvent(element) {
+  
 }
