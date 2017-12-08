@@ -3,91 +3,99 @@
 <head>
   <title>Edit Event</title>
   <meta charset="utf-8" />
-
   <link rel="stylesheet" href="bootstrap.css" />
-
   <script src="jquery-3.2.1.slim.min.js"></script>
+  <style>
+    .hidden-p {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <!-- Remove this comment when done -->
   <div class="container container-index">
-
-    <h3 class="page-title-2">Create Event</h3>
+    <h3 class="page-title-2">Edit Event</h3>
     <div class="row form-row">
       <div class="col align-self-center">
         <form>
+          <nav class="navbar">
+            <ul class="nav nav-pills nav-fill">
+              <li class="nav-item active">
+                <a id="nav_create_game" class="nav-link active" onclick="showGameFields()">Game</a>
+              </li>
+              <li class="nav-item">
+                <a id="nav_create_practice" class="nav-link" onclick="showPracticeFields()">Practice</a>
+              </li>
+              <li class="nav-item">
+                <a id="nav_create_other" class="nav-link" onclick="showOtherFields()">Other</a>
+              </li>
+            </ul>
+          </nav>
           <h6 id="warning"></h6>
-          <!-- Row -->
-          <div class="form-group">
-              <label>Event</label>
-
-              <select class="form-control" id="event-type" onchange="changeEvent(this)">
-                <option value="game">Game</option>
-                <option value="practice">Practice</option>
-                <option value="other">Other</option>
-              </select>
-
-          </div>
-
-          <!-- Team Option -->
-          <div class="form-group" id="team-option">
+          <div id="game-create-form" class="group">
+            <div class="form-group" id="team-option">
               <label>Team</label>
               <input type="text" class="form-control" id="opponent" placeholder="Enter opponent's name">
-          </div>
-
-          <!-- Other Option -->
-          <div class="form-group" style="display:none;" id="other-option">
-              <label style="">Title</label>
-              <input type="text" class="form-control" id="title" placeholder="Add a short, clear name">
-          </div>
-
-          <!-- Row -->
-          <div class="form-group">
+            </div>
+            <div class="form-group">
               <label>Location</label>
               <input type="text" class="form-control" id="location" placeholder="Enter a place or address">
-          </div>
-          <!-- Row -->
-          <div class="form-group">
+            </div>
+            <div class="form-group">
               <label class="visible">Date / Time</label>
-
-              <label class="hidden">Start</label>
-              <br />
+              <br/>
               <input type="date" class="time-input" id="start-date">
               <input type="time" class="time-input" id="start-time">
-              <br /><br />
-              <a href="#" id="end-time" class="visible"> + End time</a>
-          </div>
-          <div class="form-group">
-              <label class="hidden">End</label>
-              <br />
-              <input type="date" class="hidden time-input" id="end-date">
-              <input type="time" class="hidden time-input" id="end_time">
-              <br /><br />
-              <a href="#" id="remove-time" class="hidden"> Remove</a>
-          </div>
-          <!-- Row -->
-          <div class="form-group">
+            </div>
+            <div class="form-group">
               <label>Notes</label>
               <textarea id="notes" class="form-control" placeholder="Tell the team more about the event."></textarea>
-          </div>
-          <div class="form-group save-exit text-center">
-              <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="editevent()">
             </div>
-          <div class="form-group exit text-center">
-              <label><a href="schedule-admin.html">Exit</a></label>
+            <div class="form-group save-exit text-center">
+              <input type="button" value="Create Event" class="btn btn-primary login" onclick="editGame()">
+            </div>
+            <div class="form-group text-center exit">
+              <label><a href="schedule-admin.html" style="padding: 0; margin: 0;">Exit</a></label>
+            </div>
+          </div>
+
+          <div id="practice-other-form" class="group">
+            <div class="form-group" id="other-option">
+              <label style="">Title</label>
+              <input type="text" class="form-control" id="title" placeholder="Add a short, clear name">
+            </div>
+            <div class="form-group">
+              <label>Location</label>
+              <input type="text" class="form-control" id="location-prac" placeholder="Enter a place or address">
+            </div>
+            <div class="form-group">
+              <label class="visible-p">Date / Time</label>
+              <label class="hidden-p">Start</label>
+              <br/>
+              <input type="date" class="time-input" id="start-date-prac">
+              <input type="time" class="time-input" id="start-time-prac">
+            </div>
+            <div class="form-group">
+              <label>Notes</label>
+              <textarea id="notes-prac" class="form-control" placeholder="Tell the team more about the event."></textarea>
+            </div>
+            <div class="form-group save-exit text-center">
+              <input type="button" value="Create Event" class="btn btn-primary login" onclick="editOther()">
+            </div>
+            <div class="form-group text-center exit">
+              <label><a href="schedule-admin.html" style="padding: 0; margin: 0;">Exit</a></label>
+            </div>
           </div>
         </form>
-
       </div>
     </div>
-
-
   </div>
 
   <script src="firebase.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="bootstrap.min.js"></script>
-
+  <script src="firebase-firestore.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script>
+    loadEditSchedule();
+  </script>
 
 </body>
 </html>

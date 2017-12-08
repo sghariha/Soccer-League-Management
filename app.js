@@ -931,3 +931,330 @@ function displayProfile(element) {
 		display.querySelector('.playerprofile').style.display = '';
 	}
 }
+
+//FUNCTIONS FOR SCHEDULE 
+
+function loadCreateSchedule() {
+  document.getElementById('practice-other-form').style.display = 'none';
+}
+
+function showGameFields() {
+  if(document.getElementById('nav_create_game').classList.contains('active')) {
+    return false;
+  }
+  else if(document.getElementById('nav_create_practice').classList.contains('active')) {
+    document.getElementById('nav_create_game').classList.add('active');
+    document.getElementById('nav_create_practice').classList.remove('active');
+    document.getElementById('practice-other-form').style.display = 'none';
+    document.getElementById('game-create-form').style.display = 'block';
+  }
+  else {
+    document.getElementById('nav_create_game').classList.add('active');
+    document.getElementById('nav_create_other').classList.remove('active');
+    document.getElementById('practice-other-form').style.display = 'none';
+    document.getElementById('game-create-form').style.display = 'block';
+  }
+}
+
+function showPracticeFields() {
+  if(document.getElementById('nav_create_game').classList.contains('active')) {
+    document.getElementById('nav_create_practice').classList.add('active');
+    document.getElementById('nav_create_game').classList.remove('active');
+    document.getElementById('practice-other-form').style.display = 'block';
+    document.getElementById('game-create-form').style.display = 'none';
+  }
+  else if(document.getElementById('nav_create_practice').classList.contains('active')) {
+    return false;
+  }
+  else {
+    document.getElementById('nav_create_practice').classList.add('active');
+    document.getElementById('nav_create_other').classList.remove('active');
+  }
+}
+
+function showOtherFields() {
+  if(document.getElementById('nav_create_game').classList.contains('active')) {
+    document.getElementById('nav_create_other').classList.add('active');
+    document.getElementById('nav_create_game').classList.remove('active');
+    document.getElementById('practice-other-form').style.display = 'block';
+    document.getElementById('game-create-form').style.display = 'none';
+  }
+  else if(document.getElementById('nav_create_practice').classList.contains('active')) {
+    document.getElementById('nav_create_other').classList.add('active');
+    document.getElementById('nav_create_practice').classList.remove('active');
+  }
+  else {
+    return false;
+  }
+}
+
+function createGame() {
+  if(document.getElementById('opponent').value && document.getElementById('location').value && 
+  document.getElementById('start-date').value && document.getElementById('start-time').value) {
+    var email;
+    firebase.auth().onAuthStateChanged(function(user) {
+      if(user) {
+        email = user.email.replace('.', '').replace('@', '');
+        db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            var team = doc.data().team;
+            db.collection("teams").doc(team).collection("events").doc(document.getElementById('start-date').value + 
+            " " + document.getElementById('opponent').value).set({
+              title: document.getElementById('opponent').value,
+              location: document.getElementById('location').value, 
+              startDate: document.getElementById('start-date').value,
+              startTime: document.getElementById('start-time').value,
+              type: 'game'
+            }).then(function(result) {
+              window.location = "schedule-admin.html";
+              return false;
+            });                
+          });
+        });
+      }
+    });
+  }
+  else {
+    document.getElementById("warning").innerHTML = "Please fill out all event information!";
+    return false;
+  }
+}
+
+function createOther() {
+  if(document.getElementById('title').value && document.getElementById('location-prac').value && 
+  document.getElementById('start-date-prac').value && document.getElementById('start-time-prac').value) {
+    var email;
+    firebase.auth().onAuthStateChanged(function(user) {
+      if(user) {
+        email = user.email.replace('.', '').replace('@', '');
+        db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            var team = doc.data().team;
+            var type = 'practice';
+            if(document.getElementById('nav_create_other').classList.contains('active')) {
+              type = 'other';
+            }
+            db.collection("teams").doc(team).collection("events").doc(document.getElementById('start-date-prac').value + 
+            " " + document.getElementById('title').value).set({
+              title: document.getElementById('title').value,
+              location: document.getElementById('location-prac').value, 
+              startDate: document.getElementById('start-date-prac').value,
+              startTime: document.getElementById('start-time-prac').value,
+              type: type
+            }).then(function(result) {
+              window.location = "schedule-admin.html";
+              return false;
+            });                
+          });
+        });
+      }
+    });
+  }
+  else {
+    document.getElementById("warning").innerHTML = "Please fill out all event information!";
+    return false;
+  }
+}
+
+function loadSchedule() {
+  var eventList = document.getElementById('cont');
+  var count = 0;
+  var weekday = new Array(7);
+
+  weekday[0] = "Sun";
+  weekday[1] = "Mon";
+  weekday[2] = "Tues";
+  weekday[3] = "Wed";
+  weekday[4] = "Thurs";
+  weekday[5] = "Fri";
+  weekday[6] = "Sat";
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if(user) {
+      var email = user.email.replace('.', '').replace('@', '');
+      db.collection("users").get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(dc) {
+          if(dc.id === email) {
+            var team = dc.data().team;
+            var counter = 0;
+            document.getElementById('eventrow0').style.display = 'none';
+            db.collection("teams").doc(team).collection('events').get().then(function(querySnapshot) {
+              querySnapshot.forEach(function(doc) {
+                var clone = document.getElementById('eventrow0').cloneNode(true);
+                var startdate = doc.data().startDate.toString();
+                var arr = startdate.split('-');             // year, month, day
+                console.log(arr[0]+" - "+arr[1]+" - "+arr[2]);
+                var day = new Date(arr[0], arr[1]-1, arr[2]);
+                var c_day = new Date();
+                if(c_day.getTime() <= day.getTime()){
+                  if(doc.data().type === 'game') {
+                    clone.querySelector('.eventtitle').innerHTML = 'Game: ' + doc.data().title;
+                  }
+                  else {
+                    clone.querySelector('.eventtitle').innerHTML = 'Event: ' + doc.data().title;
+                  }
+                  clone.id = doc.id;
+                  clone.querySelector('.eventlocation').innerHTML = 'Location: ' + doc.data().location;
+                  clone.querySelector('.eventstartdate').innerHTML = 'Date: ' + doc.data().startDate;
+                  clone.querySelector('.eventstarttime').innerHTML = 'Time: ' + doc.data().startTime;
+                  clone.querySelector('.editevent').name = doc.id;
+                  clone.querySelector('.deleteevent').name = doc.id;
+                  document.getElementById('cont').appendChild(clone);
+                  document.getElementById(doc.id).style.display = 'block';
+                }
+              });
+            });
+          }
+
+        });
+      });
+    }
+  });
+}
+
+function addToSchedule() {
+  window.location = "create-event.html";
+  return false;
+}
+
+function displayEditEvent(element) {
+  localStorage.setItem('editEvent', element.name);
+  window.location = "edit-event.html";
+  return false;
+}
+
+function loadEditSchedule() {
+  firebase.auth().onAuthStateChanged(function(user) {
+  if(user) {
+    console.log("hello");
+    var email = user.email.replace('.', '').replace('@', '');
+    db.collection("users").get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(dc) {
+        console.log(dc.id);
+        if(dc.id === email) {
+          var team = dc.data().team;
+          db.collection('teams').doc(team).collection('events').get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              if(doc.id === localStorage.getItem('editEvent')) {
+                console.log(doc.data().type)
+                if(doc.data().type === 'game') {
+                  document.getElementById('practice-other-form').style.display = 'none';
+                  document.getElementById('opponent').value = doc.data().title;
+                  document.getElementById('location').value = doc.data().location;
+                  document.getElementById('start-date').value = doc.data().startDate;
+                  document.getElementById('start-time').value = doc.data().startTime;
+                }
+                else if(doc.data().type === 'practice') {
+                  document.getElementById('game-create-form').style.display = 'none';
+                  document.getElementById('nav_create_practice').classList.add('active');
+                  document.getElementById('nav_create_game').classList.remove('active');
+                  document.getElementById('title').value = doc.data().title;
+                  document.getElementById('location-prac').value = doc.data().location;
+                  document.getElementById('start-date-prac').value = doc.data().startDate;
+                  document.getElementById('start-time-prac').value = doc.data().startTime;
+                }
+                else {
+                  document.getElementById('game-create-form').style.display = 'none';
+                  document.getElementById('nav_create_other').classList.add('active');
+                  document.getElementById('nav_create_game').classList.remove('active');
+                  document.getElementById('title').value = doc.data().title;
+                  document.getElementById('location-prac').value = doc.data().location;
+                  document.getElementById('start-date-prac').value = doc.data().startDate;
+                  document.getElementById('start-time-prac').value = doc.data().startTime;
+                }
+              }
+            });
+          });
+        }
+      });
+    });
+  }
+  });
+}
+
+function editGame() {
+  if(document.getElementById('opponent').value && document.getElementById('location').value && 
+  document.getElementById('start-date').value && document.getElementById('start-time').value) {
+    var email;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if(user) {
+        email = user.email.replace('.', '').replace('@', '');
+        db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            var team = doc.data().team;
+            if(localStorage.getItem("editEvent") !== document.getElementById('start-date').value + 
+            " " + document.getElementById('opponent').value) {
+                db.collection("teams").doc(team).collection("events").doc(localStorage.getItem("editEvent")).delete().then(function() {
+                  console.log("Document successfully deleted!");
+                }).catch(function(error) {
+                  console.error("Error removing document: ", error);
+                });
+            }
+            db.collection("teams").doc(team).collection("events").doc(document.getElementById('start-date').value + 
+            " " + document.getElementById('opponent').value).set({
+              title: document.getElementById('opponent').value,
+              location: document.getElementById('location').value, 
+              startDate: document.getElementById('start-date').value,
+              startTime: document.getElementById('start-time').value,
+              type: 'game'
+            }).then(function(result) {
+              window.location = "schedule-admin.html";
+              return false;
+            });                
+          });
+        });
+      }
+    });
+  }
+  else {
+    document.getElementById("warning").innerHTML = "Please fill out all event information!";
+    return false;
+  }
+}
+
+
+function editOther() {
+  if(document.getElementById('title').value && document.getElementById('location').value && 
+  document.getElementById('start-date').value && document.getElementById('start-time').value) {
+    var email;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if(user) {
+        email = user.email.replace('.', '').replace('@', '');
+        db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            var team = doc.data().team;
+            var type = 'practice';
+            if(document.getElementById('nav_create_other').classList.contains('active')) {
+              type = 'other';
+            }
+            if(localStorage.getItem("editEvent") !== document.getElementById('start-date').value + 
+            " " + document.getElementById('title').value) {
+                db.collection("teams").doc(team).collection("events").doc(localStorage.getItem("editEvent")).delete().then(function() {
+                  console.log("Document successfully deleted!");
+                }).catch(function(error) {
+                  console.error("Error removing document: ", error);
+                });
+            }
+            db.collection("teams").doc(team).collection("events").doc(document.getElementById('start-date').value + 
+            " " + document.getElementById('title').value).set({
+              title: document.getElementById('title').value,
+              location: document.getElementById('location').value, 
+              startDate: document.getElementById('start-date').value,
+              startTime: document.getElementById('start-time').value,
+              type: type
+            }).then(function(result) {
+              window.location = "schedule-admin.html";
+              return false;
+            });                
+          });
+        });
+      }
+    });
+  }
+  else {
+    document.getElementById("warning").innerHTML = "Please fill out all event information!";
+    return false;
+  }
+}
