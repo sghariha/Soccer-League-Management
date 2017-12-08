@@ -25,11 +25,11 @@ var config = {
     storageBucket: "cse134b-527c4.appspot.com",
     messagingSenderId: "46669459351"
   };
-  firebase.initializeApp(config);
-  var database = firebase.database();
-var name, email, photoUrl, uid, emailVerified, team;
-
+firebase.initializeApp(config);
 var db  =firebase.firestore();
+
+//var database = firebase.database();
+//var name, email, photoUrl, uid, emailVerified, team;
 /*
 firebase.firestore().enablePersistence()
   .then(function() {
@@ -51,7 +51,7 @@ firebase.firestore().enablePersistence()
 
 function writeToFirestore() {
 db.collection('users').doc('first').set({
-  user: 'three',
+  user: 'fourrrr',
   name: 'One'
 });
 }
@@ -500,24 +500,22 @@ function editStats() {
     }
 
 
+//FUNCTIONS FOR REGISTER USER
 
 function loadRegister() {
 	document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('new-team-signup').style.display = "none";
     var team = [];
-    var query = database.ref("teams").orderByKey();
-	query.once("value")
-	.then(function(snapshot) {
-    	snapshot.forEach(function(childSnapshot) {
-      		team.push(childSnapshot.key);
-      		var x = document.getElementById("jointeam");
-			var option = document.createElement("option");
-			option.text = childSnapshot.key;
-			option.value = childSnapshot.key;
-			x.add(option, x[0]);
-  		});
-	});
-});
+    db.collection("teams").get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          var x = document.getElementById("jointeam");
+          var option = document.createElement("option");
+          option.text = doc.id;
+          option.value = doc.id;
+          x.add(option, x[0]);
+      });
+    });
+  });
 }
 
 function showExistingTeam() {
@@ -543,26 +541,31 @@ function showNewTeam() {
 }
 
 function registerExisting() {
-	if(document.getElementById('username').value && document.getElementById('email').value &&
-	document.getElementById('password').value && document.getElementById('confirmpassword').value) {
-		if(document.getElementById('password').value === document.getElementById('confirmpassword').value) {
-			firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value,
-			document.getElementById('password').value).then(function(result) {
-				var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
-				firebase.database().ref('users').update({[storedEmail] : document.getElementById('jointeam').value});
-				window.location = "login.html";
-			}).catch(function(error) {
-  				var errorCode = error.code;
-  				var errorMessage = error.message;
-  				document.getElementById("warningregister").innerHTML = "Ensure email is valid and if password is at least 6 characters!";
-  				return false;
-			});
-		}
-		else {
-			document.getElementById("warningregister").innerHTML = "Passwords do not match!";
-		}
-	}
-}
+  if(document.getElementById('username').value && document.getElementById('email').value &&
+  document.getElementById('password').value && document.getElementById('confirmpassword').value) {
+    if(document.getElementById('password').value === document.getElementById('confirmpassword').value) {
+      firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value,
+      document.getElementById('password').value).then(function(result) {
+        var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
+        db.collection('users').doc(storedEmail).set({
+          team: document.getElementById('jointeam').value
+        }).then(function(result) {
+          window.location = "login.html";
+        });
+      })
+      .catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        document.getElementById("warningregister").innerHTML = "Ensure email is valid and if password is at least 6 characters!";
+        return false;
+      });
+    }
+    else {
+      document.getElementById("warningregister").innerHTML = "Passwords do not match!";
+      return false;
+    }
+  }
+} 
 
 function registerNew() {
 	if(document.getElementById('username').value && document.getElementById('email').value &&
@@ -571,10 +574,17 @@ function registerNew() {
 		if(document.getElementById('password').value === document.getElementById('confirmpassword').value) {
 			firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value,
 			document.getElementById('password').value).then(function(result) {
-				var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
-				firebase.database().ref('users').update({[storedEmail] : document.getElementById('team-new').value});
-				firebase.database().ref('teams/' + document.getElementById('team-new').value).update({teamname : document.getElementById('team-new').value});
-				window.location = "login.html";
+        var storedEmail = document.getElementById('email').value.replace('.', '').replace('@', '');
+        db.collection('users').doc(storedEmail).set({
+          team: document.getElementById('team-new').value
+        }).then(function(result) {
+          db.collection('teams').doc(document.getElementById('team-new').value).set({
+            team: document.getElementById('team-new').value
+          }).then(function(result) {
+            window.location = "login.html";
+          });
+        });
+        console.log(document.getElementById('email').value.replace('.', '').replace('@', ''));
 			}).catch(function(error) {
   				var errorCode = error.code;
   				var errorMessage = error.message;
@@ -584,6 +594,7 @@ function registerNew() {
 		}
 		else {
 			document.getElementById("warningregister").innerHTML = "Passwords do not match!";
+      return false;
 		}
 	}
 }
@@ -608,6 +619,8 @@ function displayUser() {
 	  email = user.email;
 	}
 }
+
+//FUNCTIONS FOR ROSTER
 
 function addPlayer() {
 	if(document.getElementById("firstname").value && document.getElementById("lastname").value &&
