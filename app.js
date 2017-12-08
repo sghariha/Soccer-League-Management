@@ -116,7 +116,7 @@ function loadStats() {
                 tmpl.querySelector('.event-date').innerHTML = startdate;
                 tmpl.querySelector('.event-day').innerHTML = day;
 
-                var title = "Game: " + value.team;
+                var title = "Game: " + value.title;
                 tmpl.querySelector('.statname').innerHTML = title;
                 tmpl.querySelector('.location').innerHTML = value.location;
 
@@ -303,7 +303,7 @@ function addStats() {
                 location: snapshot.data().location,
                 startDate: snapshot.data().startDate,
                 startTime: snapshot.data().startTime,
-                team: snapshot.data().team,
+                title: snapshot.data().title,
                 winLoss: document.getElementById("winorloss").value,
                 homeScore: document.getElementById("homescore").value,
                 awayScore: document.getElementById("awayscore").value,
@@ -485,7 +485,7 @@ function editStats() {
                 location: gameInfo.data().location,
                 startTime: gameInfo.data().startTime,
                 startDate: gameInfo.data().startDate,
-                team: gameInfo.data().team,
+                title: gameInfo.data().title,
                 winLoss: document.getElementById("winorloss").value,
                 homeScore: document.getElementById("homescore").value,
                 awayScore: document.getElementById("awayscore").value,
@@ -1065,7 +1065,7 @@ function displaystat (element) {
 }
 
 
-//FUNCTIONS FOR SCHEDULE 
+//FUNCTIONS FOR SCHEDULE
 
 function loadCreateSchedule() {
   document.getElementById('practice-other-form').style.display = 'none';
@@ -1122,7 +1122,7 @@ function showOtherFields() {
 }
 
 function createGame() {
-  if(document.getElementById('opponent').value && document.getElementById('location').value && 
+  if(document.getElementById('opponent').value && document.getElementById('location').value &&
   document.getElementById('start-date').value && document.getElementById('start-time').value) {
     var email;
     firebase.auth().onAuthStateChanged(function(user) {
@@ -1131,17 +1131,17 @@ function createGame() {
         db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
             var team = doc.data().team;
-            db.collection("teams").doc(team).collection("schedule").doc(document.getElementById('start-date').value + 
+            db.collection("teams").doc(team).collection("schedule").doc(document.getElementById('start-date').value +
             " " + document.getElementById('opponent').value).set({
               title: document.getElementById('opponent').value,
-              location: document.getElementById('location').value, 
+              location: document.getElementById('location').value,
               startDate: document.getElementById('start-date').value,
               startTime: document.getElementById('start-time').value,
               eventType: 'game'
             }).then(function(result) {
               window.location = "schedule-admin.html";
               return false;
-            });                
+            });
           });
         });
       }
@@ -1154,7 +1154,7 @@ function createGame() {
 }
 
 function createOther() {
-  if(document.getElementById('title').value && document.getElementById('location-prac').value && 
+  if(document.getElementById('title').value && document.getElementById('location-prac').value &&
   document.getElementById('start-date-prac').value && document.getElementById('start-time-prac').value) {
     var email;
     firebase.auth().onAuthStateChanged(function(user) {
@@ -1167,17 +1167,17 @@ function createOther() {
             if(document.getElementById('nav_create_other').classList.contains('active')) {
               type = 'other';
             }
-            db.collection("teams").doc(team).collection("schedule").doc(document.getElementById('start-date-prac').value + 
+            db.collection("teams").doc(team).collection("schedule").doc(document.getElementById('start-date-prac').value +
             " " + document.getElementById('title').value).set({
               title: document.getElementById('title').value,
-              location: document.getElementById('location-prac').value, 
+              location: document.getElementById('location-prac').value,
               startDate: document.getElementById('start-date-prac').value,
               startTime: document.getElementById('start-time-prac').value,
               eventType: type
             }).then(function(result) {
               window.location = "schedule-admin.html";
               return false;
-            });                
+            });
           });
         });
       }
@@ -1306,7 +1306,7 @@ function loadEditSchedule() {
 }
 
 function editGame() {
-  if(document.getElementById('opponent').value && document.getElementById('location').value && 
+  if(document.getElementById('opponent').value && document.getElementById('location').value &&
   document.getElementById('start-date').value && document.getElementById('start-time').value) {
     var email;
 
@@ -1316,7 +1316,7 @@ function editGame() {
         db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
             var team = doc.data().team;
-            if(localStorage.getItem("editEvent") !== document.getElementById('start-date').value + 
+            if(localStorage.getItem("editEvent") !== document.getElementById('start-date').value +
             " " + document.getElementById('opponent').value) {
                 db.collection("teams").doc(team).collection("schedule").doc(localStorage.getItem("editEvent")).delete().then(function() {
                   console.log("Document successfully deleted!");
@@ -1324,17 +1324,17 @@ function editGame() {
                   console.error("Error removing document: ", error);
                 });
             }
-            db.collection("teams").doc(team).collection("schedule").doc(document.getElementById('start-date').value + 
+            db.collection("teams").doc(team).collection("schedule").doc(document.getElementById('start-date').value +
             " " + document.getElementById('opponent').value).set({
               title: document.getElementById('opponent').value,
-              location: document.getElementById('location').value, 
+              location: document.getElementById('location').value,
               startDate: document.getElementById('start-date').value,
               startTime: document.getElementById('start-time').value,
               eventType: 'game'
             }).then(function(result) {
               window.location = "schedule-admin.html";
               return false;
-            });                
+            });
           });
         });
       }
@@ -1348,7 +1348,7 @@ function editGame() {
 
 
 function editOther() {
-  if(document.getElementById('title').value && document.getElementById('location-prac').value && 
+  if(document.getElementById('title').value && document.getElementById('location-prac').value &&
   document.getElementById('start-date-prac').value && document.getElementById('start-time-prac').value) {
     var email;
 
@@ -1362,7 +1362,7 @@ function editOther() {
             if(document.getElementById('nav_create_other').classList.contains('active')) {
               type = 'other';
             }
-            if(localStorage.getItem("editEvent") !== document.getElementById('start-date').value + 
+            if(localStorage.getItem("editEvent") !== document.getElementById('start-date').value +
             " " + document.getElementById('title').value) {
                 db.collection("teams").doc(team).collection("schedule").doc(localStorage.getItem("editEvent")).delete().then(function() {
                   console.log("Document successfully deleted!");
@@ -1370,17 +1370,17 @@ function editOther() {
                   console.error("Error removing document: ", error);
                 });
             }
-            db.collection("teams").doc(team).collection("schedule").doc(document.getElementById('start-date').value + 
+            db.collection("teams").doc(team).collection("schedule").doc(document.getElementById('start-date').value +
             " " + document.getElementById('title').value).set({
               title: document.getElementById('title').value,
-              location: document.getElementById('location-prac').value, 
+              location: document.getElementById('location-prac').value,
               startDate: document.getElementById('start-date-prac').value,
               startTime: document.getElementById('start-time-prac').value,
               eventType: type
             }).then(function(result) {
               window.location = "schedule-admin.html";
               return false;
-            });                
+            });
           });
         });
       }
