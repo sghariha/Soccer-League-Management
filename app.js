@@ -637,14 +637,26 @@ function registerNew() {
     if(document.getElementById('password').value === document.getElementById('confirmpassword').value) {
       firebase.auth().createUserWithEmailAndPassword(document.getElementById('email').value,
       document.getElementById('password').value).then(function(result) {
+
         var storedEmail = document.getElementById('email').value.replace(/[^a-zA-Z0-9 ]/g,"");
         db.collection('users').doc(storedEmail).set({
           team: document.getElementById('team-new').value
-        }).then(function(result) {
+        })
+        .then(function(result) {
           db.collection('teams').doc(document.getElementById('team-new').value).set({
             team: document.getElementById('team-new').value
-          }).then(function(result) {
-            window.location = "login.html";
+          })
+          .then(function(result) {
+            db.collection('teams').doc(document.getElementById('team-new').value).collection('teamStats').doc('teamStats').set({
+              goalsAgainst: '0',
+              goalsFor: '0',
+              losses: '0',
+              ties: '0',
+              wins: '0'
+            })
+            .then(function(result) {
+              window.location = "login.html";
+            });
           });
         });
       }).catch(function(error) {
