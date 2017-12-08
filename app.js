@@ -640,7 +640,8 @@ function registerNew() {
 
         var storedEmail = document.getElementById('email').value.replace(/[^a-zA-Z0-9 ]/g,"");
         db.collection('users').doc(storedEmail).set({
-          team: document.getElementById('team-new').value
+          team: document.getElementById('team-new').value,
+          email: storedEmail
         })
         .then(function(result) {
           db.collection('teams').doc(document.getElementById('team-new').value).set({
@@ -1128,9 +1129,11 @@ function createGame() {
     firebase.auth().onAuthStateChanged(function(user) {
       if(user) {
         email = user.email.replace('.', '').replace('@', '');
+        console.log(email);
         db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
             var team = doc.data().team;
+            console.log(doc.id);
             db.collection("teams").doc(team).collection("schedule").doc(document.getElementById('start-date').value +
             " " + document.getElementById('opponent').value).set({
               title: document.getElementById('opponent').value,
