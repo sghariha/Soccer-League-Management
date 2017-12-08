@@ -22,6 +22,7 @@ const cacheFiles = [
   './jquery-3.2.1.slim.min.js',
   './bootstrap.min.js',
   './firebase.js',
+  './popper.min.js',
   // Img Files
   './soccer-ball.png',
   // SVG Files

@@ -6,13 +6,15 @@
 
 
   <link rel="stylesheet" href="bootstrap.css" />
-
   <script src="jquery-3.2.1.slim.min.js"></script>
+  <script src="firebase.js"></script>
+    <script src="app.js"></script>
 </head>
 <body>
   <!-- Remove this comment when done -->
   <div class="container container-index" id="schedule-container">
     <nav class="navbar">
+      <a class="addbtn" href="#" onclick="logOff()" style="position: absolute; right: 0; top: 100px;">log off</a>
       <ul class="nav nav-pills nav-fill">
         <li class="nav-item">
           <a  id="nav_a" class="nav-link" href="statistics-admin.html"><img src="bar-chart.svg" /></a>
@@ -85,8 +87,7 @@
 </div>
 
 
-<script src="firebase.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="bootstrap.min.js"></script>
 
 
