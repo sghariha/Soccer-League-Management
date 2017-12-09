@@ -329,8 +329,10 @@ function addStats() {
               }
 
               var addStats =  db.doc('/teams/'+team+'/schedule/'+currentEvent);
-              addStats.update(updateData);
-              window.location = "statistics-admin.html";
+              addStats.update(updateData).then(function(something){
+                window.location = "statistics-admin.html";
+              });
+
 
             }).catch(function(error){
               console.log("Error getting document:", error);
@@ -785,42 +787,58 @@ function addPlayer() {
 }
 
 function loadEditPlayer() {
-  var edit = localStorage.getItem("editPlayer");
-  var email;
-  firebase.auth().onAuthStateChanged(function(user) {
-    if(user) {
-      email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
-      db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          var team = doc.data().team;
-          db.collection("teams").doc(team).collection('roster').get().then(function(querySnapshot) {
+  firebase.firestore().enablePersistence()
+  .then(function() {
+      // Initialize Cloud Firestore through firebase
+      var db = firebase.firestore();
+      var edit = localStorage.getItem("editPlayer");
+      var email;
+      firebase.auth().onAuthStateChanged(function(user) {
+        if(user) {
+          email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
+          db.collection("users").where("email", "==", email).get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
-              console.log(localStorage.getItem("editPlayer"));
-              if(doc.id === localStorage.getItem("editPlayer")) {
-                document.getElementById("firstname").value = doc.data().firstName;
-                document.getElementById("lastname").value = doc.data().lastName;
-                document.getElementById("position").value = doc.data().position;
-                document.getElementById("status").value = doc.data().status;
-                document.getElementById("feet").value = doc.data().feet;
-                document.getElementById("inches").value = doc.data().inches;
-                document.getElementById("weight").value = doc.data().weight;
+              var team = doc.data().team;
+              db.collection("teams").doc(team).collection('roster').get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                  console.log(localStorage.getItem("editPlayer"));
+                  if(doc.id === localStorage.getItem("editPlayer")) {
+                    document.getElementById("firstname").value = doc.data().firstName;
+                    document.getElementById("lastname").value = doc.data().lastName;
+                    document.getElementById("position").value = doc.data().position;
+                    document.getElementById("status").value = doc.data().status;
+                    document.getElementById("feet").value = doc.data().feet;
+                    document.getElementById("inches").value = doc.data().inches;
+                    document.getElementById("weight").value = doc.data().weight;
 
-                document.getElementById("playerfoul").value = doc.data().playerFouls;
-                document.getElementById("playerrc").value = doc.data().redCards;
-                document.getElementById("playeryc").value = doc.data().yellowCards;
-                document.getElementById("playersog").value = doc.data().shotsOnGoal;
-                document.getElementById("playerg").value = doc.data().goals;
-                document.getElementById("playercka").value = doc.data().cornerKickAttempts;
-                document.getElementById("playergka").value = doc.data().goalKickAttempts;
-                document.getElementById("playerpka").value = doc.data().penaltyKickAttempts;
-                document.getElementById("playerti").value = doc.data().throwIns;
-                document.getElementById("playerapp").value = doc.data().appearances;
-              }
+                    document.getElementById("playerfoul").value = doc.data().playerFouls;
+                    document.getElementById("playerrc").value = doc.data().redCards;
+                    document.getElementById("playeryc").value = doc.data().yellowCards;
+                    document.getElementById("playersog").value = doc.data().shotsOnGoal;
+                    document.getElementById("playerg").value = doc.data().goals;
+                    document.getElementById("playercka").value = doc.data().cornerKickAttempts;
+                    document.getElementById("playergka").value = doc.data().goalKickAttempts;
+                    document.getElementById("playerpka").value = doc.data().penaltyKickAttempts;
+                    document.getElementById("playerti").value = doc.data().throwIns;
+                    document.getElementById("playerapp").value = doc.data().appearances;
+                  }
+                });
+              });
             });
           });
-        });
+        }
       });
-    }
+  })
+  .catch(function(err) {
+      if (err.code == 'failed-precondition') {
+          // Multiple tabs open, persistence can only be enabled
+          // in one tab at a a time.
+          // ...
+      } else if (err.code == 'unimplemented') {
+          // The current browser does not support all of the
+          // features required to enable persistence
+          // ...
+      }
   });
 }
 
@@ -1041,9 +1059,8 @@ function DSE(element) {
       email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
       db.doc("/users/"+email).get().then(function(querySnapshot) {
         team = querySnapshot.data().team;
-
         db.doc('teams/'+team+'/schedule/'+eventName).delete().then(function() {
-          console.log("Document successfully deleted!");
+          location.reload();
         }).catch(function(error) {
           console.error("Error removing document: ", error);
         });
@@ -1051,6 +1068,9 @@ function DSE(element) {
     }
   });
 }
+
+
+
 
 function displaystat (element) {
   if(!element.parentElement.parentElement.nextElementSibling.style.display) {
@@ -1193,58 +1213,74 @@ function createOther() {
 }
 
 function loadSchedule() {
-  var eventList = document.getElementById('cont');
-  var count = 0;
-  var weekday = new Array(7);
+  firebase.firestore().enablePersistence()
+  .then(function() {
+      // Initialize Cloud Firestore through firebase
+      var db = firebase.firestore();
+      var eventList = document.getElementById('cont');
+      var count = 0;
+      var weekday = new Array(7);
 
-  weekday[0] = "Sun";
-  weekday[1] = "Mon";
-  weekday[2] = "Tues";
-  weekday[3] = "Wed";
-  weekday[4] = "Thurs";
-  weekday[5] = "Fri";
-  weekday[6] = "Sat";
+      weekday[0] = "Sun";
+      weekday[1] = "Mon";
+      weekday[2] = "Tues";
+      weekday[3] = "Wed";
+      weekday[4] = "Thurs";
+      weekday[5] = "Fri";
+      weekday[6] = "Sat";
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if(user) {
-      var email = user.email.replace('.', '').replace('@', '');
-      db.collection("users").get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(dc) {
-          if(dc.id === email) {
-            var team = dc.data().team;
-            var counter = 0;
-            document.getElementById('eventrow0').style.display = 'none';
-            db.collection("teams").doc(team).collection('schedule').get().then(function(querySnapshot) {
-              querySnapshot.forEach(function(doc) {
-                var clone = document.getElementById('eventrow0').cloneNode(true);
-                var startdate = doc.data().startDate.toString();
-                var arr = startdate.split('-');             // year, month, day
-                console.log(arr[0]+" - "+arr[1]+" - "+arr[2]);
-                var day = new Date(arr[0], arr[1]-1, arr[2]);
-                var c_day = new Date();
-                if(c_day.getTime() <= day.getTime()){
-                  if(doc.data().eventType === 'game') {
-                    clone.querySelector('.eventtitle').innerHTML = 'Game: ' + doc.data().title;
-                  }
-                  else {
-                    clone.querySelector('.eventtitle').innerHTML = 'Event: ' + doc.data().title;
-                  }
-                  clone.id = doc.id;
-                  clone.querySelector('.eventlocation').innerHTML = 'Location: ' + doc.data().location;
-                  clone.querySelector('.eventstartdate').innerHTML = 'Date: ' + doc.data().startDate;
-                  clone.querySelector('.eventstarttime').innerHTML = 'Time: ' + doc.data().startTime;
-                  clone.querySelector('.editevent').name = doc.id;
-                  clone.querySelector('.deleteevent').name = doc.id;
-                  document.getElementById('cont').appendChild(clone);
-                  document.getElementById(doc.id).style.display = 'block';
-                }
-              });
+      firebase.auth().onAuthStateChanged(function(user) {
+        if(user) {
+          var email = user.email.replace('.', '').replace('@', '');
+          db.collection("users").get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(dc) {
+              if(dc.id === email) {
+                var team = dc.data().team;
+                var counter = 0;
+                document.getElementById('eventrow0').style.display = 'none';
+                db.collection("teams").doc(team).collection('schedule').get().then(function(querySnapshot) {
+                  querySnapshot.forEach(function(doc) {
+                    var clone = document.getElementById('eventrow0').cloneNode(true);
+                    var startdate = doc.data().startDate.toString();
+                    var arr = startdate.split('-');             // year, month, day
+                    console.log(arr[0]+" - "+arr[1]+" - "+arr[2]);
+                    var day = new Date(arr[0], arr[1]-1, arr[2]);
+                    var c_day = new Date();
+                    if(c_day.getTime() <= day.getTime()){
+                      if(doc.data().eventType === 'game') {
+                        clone.querySelector('.eventtitle').innerHTML = 'Game: ' + doc.data().title;
+                      }
+                      else {
+                        clone.querySelector('.eventtitle').innerHTML = 'Event: ' + doc.data().title;
+                      }
+                      clone.id = doc.id;
+                      clone.querySelector('.eventlocation').innerHTML = 'Location: ' + doc.data().location;
+                      clone.querySelector('.eventstartdate').innerHTML = 'Date: ' + doc.data().startDate;
+                      clone.querySelector('.eventstarttime').innerHTML = 'Time: ' + doc.data().startTime;
+                      clone.querySelector('.editevent').name = doc.id;
+                      clone.querySelector('.deleteevent').name = doc.id;
+                      document.getElementById('cont').appendChild(clone);
+                      document.getElementById(doc.id).style.display = 'block';
+                    }
+                  });
+                });
+              }
+
             });
-          }
-
-        });
+          });
+        }
       });
-    }
+  })
+  .catch(function(err) {
+      if (err.code == 'failed-precondition') {
+          // Multiple tabs open, persistence can only be enabled
+          // in one tab at a a time.
+          // ...
+      } else if (err.code == 'unimplemented') {
+          // The current browser does not support all of the
+          // features required to enable persistence
+          // ...
+      }
   });
 }
 
@@ -1260,51 +1296,67 @@ function displayEditEvent(element) {
 }
 
 function loadEditSchedule() {
-  firebase.auth().onAuthStateChanged(function(user) {
-  if(user) {
-    console.log("hello");
-    var email = user.email.replace('.', '').replace('@', '');
-    db.collection("users").get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(dc) {
-        console.log(dc.id);
-        if(dc.id === email) {
-          var team = dc.data().team;
-          db.collection('teams').doc(team).collection('schedule').get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-              if(doc.id === localStorage.getItem('editEvent')) {
-                console.log(doc.data().eventType)
-                if(doc.data().eventType === 'game') {
-                  document.getElementById('practice-other-form').style.display = 'none';
-                  document.getElementById('opponent').value = doc.data().title;
-                  document.getElementById('location').value = doc.data().location;
-                  document.getElementById('start-date').value = doc.data().startDate;
-                  document.getElementById('start-time').value = doc.data().startTime;
-                }
-                else if(doc.data().eventType === 'practice') {
-                  document.getElementById('game-create-form').style.display = 'none';
-                  document.getElementById('nav_create_practice').classList.add('active');
-                  document.getElementById('nav_create_game').classList.remove('active');
-                  document.getElementById('title').value = doc.data().title;
-                  document.getElementById('location-prac').value = doc.data().location;
-                  document.getElementById('start-date-prac').value = doc.data().startDate;
-                  document.getElementById('start-time-prac').value = doc.data().startTime;
-                }
-                else {
-                  document.getElementById('game-create-form').style.display = 'none';
-                  document.getElementById('nav_create_other').classList.add('active');
-                  document.getElementById('nav_create_game').classList.remove('active');
-                  document.getElementById('title').value = doc.data().title;
-                  document.getElementById('location-prac').value = doc.data().location;
-                  document.getElementById('start-date-prac').value = doc.data().startDate;
-                  document.getElementById('start-time-prac').value = doc.data().startTime;
-                }
-              }
-            });
+  firebase.firestore().enablePersistence()
+  .then(function() {
+      // Initialize Cloud Firestore through firebase
+      var db = firebase.firestore();
+      firebase.auth().onAuthStateChanged(function(user) {
+      if(user) {
+        console.log("hello");
+        var email = user.email.replace('.', '').replace('@', '');
+        db.collection("users").get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(dc) {
+            console.log(dc.id);
+            if(dc.id === email) {
+              var team = dc.data().team;
+              db.collection('teams').doc(team).collection('schedule').get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                  if(doc.id === localStorage.getItem('editEvent')) {
+                    console.log(doc.data().eventType)
+                    if(doc.data().eventType === 'game') {
+                      document.getElementById('practice-other-form').style.display = 'none';
+                      document.getElementById('opponent').value = doc.data().title;
+                      document.getElementById('location').value = doc.data().location;
+                      document.getElementById('start-date').value = doc.data().startDate;
+                      document.getElementById('start-time').value = doc.data().startTime;
+                    }
+                    else if(doc.data().eventType === 'practice') {
+                      document.getElementById('game-create-form').style.display = 'none';
+                      document.getElementById('nav_create_practice').classList.add('active');
+                      document.getElementById('nav_create_game').classList.remove('active');
+                      document.getElementById('title').value = doc.data().title;
+                      document.getElementById('location-prac').value = doc.data().location;
+                      document.getElementById('start-date-prac').value = doc.data().startDate;
+                      document.getElementById('start-time-prac').value = doc.data().startTime;
+                    }
+                    else {
+                      document.getElementById('game-create-form').style.display = 'none';
+                      document.getElementById('nav_create_other').classList.add('active');
+                      document.getElementById('nav_create_game').classList.remove('active');
+                      document.getElementById('title').value = doc.data().title;
+                      document.getElementById('location-prac').value = doc.data().location;
+                      document.getElementById('start-date-prac').value = doc.data().startDate;
+                      document.getElementById('start-time-prac').value = doc.data().startTime;
+                    }
+                  }
+                });
+              });
+            }
           });
-        }
+        });
+      }
       });
-    });
-  }
+  })
+  .catch(function(err) {
+      if (err.code == 'failed-precondition') {
+          // Multiple tabs open, persistence can only be enabled
+          // in one tab at a a time.
+          // ...
+      } else if (err.code == 'unimplemented') {
+          // The current browser does not support all of the
+          // features required to enable persistence
+          // ...
+      }
   });
 }
 

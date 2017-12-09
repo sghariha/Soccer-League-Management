@@ -9,6 +9,23 @@
 <body>
   <div class="container container-index" id="cont">
     <nav class="navbar">
+      <a class="addbtn moreButton" type="button" href="#" onclick="toggleSignOut()" data-toggle="modal" data-target="#logModal"><img src="more.svg"/></a>
+
+      <div class="modal fade" id="logModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Log Off</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <a class="addbtn" href="#" onclick="logOff()">Log Off</a>
+            </div>
+          </div>
+        </div>
+      </div>
       <ul class="nav nav-pills nav-fill">
         <li class="nav-item">
           <a  id="nav_a" class="nav-link" href="statistics-admin.html"><img src="bar-chart.svg" /></a>
