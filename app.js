@@ -1,3 +1,5 @@
+/*SERVICE WORKER INITIALIZATION*/
+
 // Check if service workers are supported by user's browsers
 if ('serviceWorker' in navigator) {
   try {
@@ -17,6 +19,10 @@ if ('serviceWorker' in navigator) {
   }
 }
 
+
+/*FIREBASE FIRESTORE INITIALIZATION*/
+
+// Initialize the firebase firestore database
 firebase.initializeApp({
   apiKey: "AIzaSyBig_htEJTY6jZ1LpuT6DvXnrqrXaa2heY",
   authDomain: "cse134b-527c4.firebaseapp.com",
@@ -33,9 +39,9 @@ function writeToFirestore() {
 }
 
 
+/*FUNCTIONS FOR STATISTICS*/
 
-/* -------------- other javascript -------------------- */
-/* start of stats javascript */
+// Initialize the statistics page with the team statistics and games with stats
 function loadStats() {
   firebase.firestore().enablePersistence()
   .then(function() {
@@ -78,7 +84,6 @@ function loadStats() {
             weekday[5] = "Fri";
             weekday[6] = "Sat"
 
-
             console.log("Ends here aaa");
             if(localStorage.getItem("eventcount")) {
               count = parseInt(localStorage.getItem("eventcount"), 10);
@@ -95,14 +100,11 @@ function loadStats() {
                 return false;
               }
 
-
               var tmpl = document.getElementById('eventrow').content.cloneNode(true);
               var startdate = value.startDate;           // year, month, day
               var arr = startdate.split('-');
               var day = new Date(arr[0], arr[1]-1, arr[2]);
               var c_day = new Date();
-
-
 
               if(c_day.getTime() > day.getTime()){
 
@@ -181,34 +183,28 @@ function loadStats() {
     if (err.code == 'failed-precondition') {
       // Multiple tabs open, persistence can only be enabled
       // in one tab at a a time.
-      // ...
     } else if (err.code == 'unimplemented') {
       // The current browser does not support all of the
       // features required to enable persistence
-      // ...
     }
   });
-
-
-
-
-
 }
 
+// Take the user to the edit statistics page when the edit button is clicked
 function editstats(element) {
-
   localStorage.setItem("editingstatsfor", element.previousElementSibling.innerHTML);
   window.location = "edit-statistics.html";
   return false;
 }
 
+// Take the user to the add statistics page when the add button is clicked
 function addstats(element) {
-  console.log("editing for: " + element.previousElementSibling.previousElementSibling.innerHTML);
   localStorage.setItem("editingstatsfor", element.previousElementSibling.previousElementSibling.innerHTML);
   window.location = "create-statistics.html";
   return false;
 }
 
+// Display the edit stats feature when the done button is clicked
 $(function() {
   $('#stats-done').click(function() {
     $('.right').addClass('col-10');
@@ -227,6 +223,7 @@ $(function() {
   })
 });
 
+// Display the done feature when the edit feature is clicked
 $(function() {
   $('#stats-edit').click(function() {
     $('.right').addClass('col-8');
@@ -245,9 +242,7 @@ $(function() {
   })
 });
 
-// delete
-// display stats
-
+// Save the statistics for a new game when the user is done adding stats for a specific game
 function addStats() {
   firebase.auth().onAuthStateChanged(function(user) {
 
@@ -332,8 +327,6 @@ function addStats() {
               addStats.update(updateData).then(function(something){
                 window.location = "statistics-admin.html";
               });
-
-
             }).catch(function(error){
               console.log("Error getting document:", error);
             });
@@ -342,19 +335,16 @@ function addStats() {
             console.log("Error getting document:", error);
           });
         }
-
       }).catch(function(error) {
         console.log("Error getting documents: ", error);
       });
-
-
     } else {
       window.location = "login.html";
     }
-    /* should be the end */
   });
 }
 
+// Initialize the edit statistics page to display the previously stored information
 function loadEditStats() {
   firebase.firestore().enablePersistence()
   .then(function() {
@@ -383,13 +373,9 @@ function loadEditStats() {
           }).catch(function(error) {
             console.log("Error getting documents: ", error);
           });
-
-
         }).catch(function(error) {
           console.log("Error getting documents: ", error);
         });
-
-
       } else {
         window.location = "login.html";
       }
@@ -399,20 +385,14 @@ function loadEditStats() {
     if (err.code == 'failed-precondition') {
       // Multiple tabs open, persistence can only be enabled
       // in one tab at a a time.
-      // ...
     } else if (err.code == 'unimplemented') {
       // The current browser does not support all of the
       // features required to enable persistence
-      // ...
     }
   });
-
-
-
 }
 
-
-
+// Update the statistics in firestore after the user is done updating statistics for a specific game
 function editStats() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -430,7 +410,6 @@ function editStats() {
         document.getElementById("goalkicks").value && document.getElementById("posstime").value) {
 
           /* Get team stats */
-
           db.doc("teams/"+team+"/teamStats/teamStats").get().then(function(teamStats){
             db.doc("teams/"+team+"/schedule/"+eventName).get().then(function(gameInfo){
               var teamLosses = teamStats.data().losses;
@@ -460,8 +439,6 @@ function editStats() {
                   teamTies +=1;
                 }
               }
-
-
               teamGoalsFor = teamGoalsFor + (document.getElementById("homescore").value-gameInfo.data().homeScore);
               teamGoalsAgainst = teamGoalsAgainst + (document.getElementById("awayscore").value-gameInfo.data().awayScore);
 
@@ -480,8 +457,6 @@ function editStats() {
               editTeamStatsUpdates.update(editTeamStatsData);
 
               /* Updated team stats ^ */
-
-
               var editStatsData = {
                 eventType: gameInfo.data().eventType,
                 location: gameInfo.data().location,
@@ -517,10 +492,7 @@ function editStats() {
                 window.location = "statistics-admin.html";
               }
             );
-
             console.log("System 3");
-            //window.location = "statistics-admin.html";
-
           }).catch(function(error) {
             console.log("Error getting documents: ", error);
           });
@@ -541,12 +513,42 @@ function editStats() {
 console.log("System 2 ");
 }
 
-/* end of stats js */
+// Delete the statistic for a game that the user selects
+function DSE(element) {
+  var eventName = element.nextElementSibling.innerHTML;
+  firebase.auth().onAuthStateChanged(function(user) {
+    if(user) {
+      email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
+      db.doc("/users/"+email).get().then(function(querySnapshot) {
+        team = querySnapshot.data().team;
+        db.doc('teams/'+team+'/schedule/'+eventName).delete().then(function() {
+          location.reload();
+        }).catch(function(error) {
+          console.error("Error removing document: ", error);
+        });
+      });
+    }
+  });
+}
+
+// Display the statistics for a particular game the user selects
+function displaystat (element) {
+  if(!element.parentElement.parentElement.nextElementSibling.style.display) {
+    element.parentElement.parentElement.nextElementSibling.style.display = 'block';
+    element.nextElementSibling.style.display = 'block';
+    element.style.display = 'none';
+  }
+  else {
+    element.parentElement.parentElement.nextElementSibling.style.display = '';
+    element.previousElementSibling.style.display = 'block';
+    element.style.display = 'none';
+  }
+}
 
 
+/*FUNCTIONS FOR LOGGING IN USER*/
 
-
-
+// Login the user and take them to the statistics page
 function loginFire() {
   var inputEmail = document.getElementById("username").value;
   var password = document.getElementById("password").value;
@@ -564,9 +566,23 @@ function loginFire() {
   });
 }
 
+// Login the user and take them to the statistics page
+function login() {
+  firebase.auth().signInWithEmailAndPassword(document.getElementById('usernamelogin').value,
+  document.getElementById('passwordlogin').value).then(function(result) {
+    window.location = "statistics-admin.html";
+  }).catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    document.getElementById("warninglogin").innerHTML = "Incorrect login!";
+    return false;
+  });
+}
 
-//FUNCTIONS FOR REGISTER USER
 
+/*FUNCTIONS FOR REGISTERING USER*/
+
+// Load the register form to display the available teams to join
 function loadRegister() {
   document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('new-team-signup').style.display = "none";
@@ -582,6 +598,7 @@ function loadRegister() {
   });
 }
 
+// Display the form for joining a team that has already been created
 function showExistingTeam() {
   document.getElementById('new-team-signup').style.display = "none";
   document.getElementById('existing-team-signup').style.display = "block";
@@ -593,6 +610,7 @@ function showExistingTeam() {
   }
 }
 
+// Display the form for creating a new team
 function showNewTeam() {
   document.getElementById('existing-team-signup').style.display = "none";
   document.getElementById('new-team-signup').style.display = "block";
@@ -604,6 +622,7 @@ function showNewTeam() {
   }
 }
 
+// Add the user to firebase for a team that has already been created
 function registerExisting() {
   if(document.getElementById('username').value && document.getElementById('email').value &&
   document.getElementById('password').value && document.getElementById('confirmpassword').value) {
@@ -632,6 +651,7 @@ function registerExisting() {
   }
 }
 
+// Add the user to firebase for a team that was just newly created
 function registerNew() {
   if(document.getElementById('username').value && document.getElementById('email').value &&
   document.getElementById('password').value && document.getElementById('confirmpassword').value &&
@@ -676,29 +696,19 @@ function registerNew() {
   }
 }
 
-function login() {
-  firebase.auth().signInWithEmailAndPassword(document.getElementById('usernamelogin').value,
-  document.getElementById('passwordlogin').value).then(function(result) {
-    window.location = "statistics-admin.html";
-  }).catch(function(error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    document.getElementById("warninglogin").innerHTML = "Incorrect login!";
-    return false;
-  });
-}
-
+// Show the user's email as stored in firebase authentication
 function displayUser() {
   var user = firebase.auth().currentUser;
   var email;
-
   if (user != null) {
     email = user.email;
   }
 }
 
-//FUNCTIONS FOR ROSTER
 
+/*FUNCTIONS FOR ROSTER*/
+
+// Add the newly created player to the roster collection on firestore for the user's team
 function addPlayer() {
   if(document.getElementById("firstname").value && document.getElementById("lastname").value &&
   document.getElementById("feet").value && document.getElementById("inches").value &&
@@ -786,6 +796,7 @@ function addPlayer() {
   }
 }
 
+// Initialize the edit player page to display the previously inputted data for the player
 function loadEditPlayer() {
   firebase.firestore().enablePersistence()
   .then(function() {
@@ -833,15 +844,14 @@ function loadEditPlayer() {
       if (err.code == 'failed-precondition') {
           // Multiple tabs open, persistence can only be enabled
           // in one tab at a a time.
-          // ...
       } else if (err.code == 'unimplemented') {
           // The current browser does not support all of the
           // features required to enable persistence
-          // ...
       }
   });
 }
 
+// Update the player's information to firestore based off of the user's inputs in the update player page
 function editPlayer() {
   if(document.getElementById("firstname").value && document.getElementById("lastname").value &&
   document.getElementById("feet").value && document.getElementById("inches").value &&
@@ -938,6 +948,7 @@ function editPlayer() {
   }
 }
 
+// Initialize the roster page to show the current players on the team of the user
 function loadRoster() {
   firebase.firestore().enablePersistence()
   .then(function() {
@@ -988,15 +999,14 @@ function loadRoster() {
     if (err.code == 'failed-precondition') {
       // Multiple tabs open, persistence can only be enabled
       // in one tab at a a time.
-      // ...
     } else if (err.code == 'unimplemented') {
       // The current browser does not support all of the
       // features required to enable persistence
-      // ...
     }
   });
 }
 
+// Take the user to the edit player page when the user clicks on the edit button
 function displayEdit(element) {
   var edit = element.name;
   localStorage.setItem("editPlayer", edit);
@@ -1004,11 +1014,13 @@ function displayEdit(element) {
   return false;
 }
 
+// Take the user to the create player page when the user clicks on the add button
 function addToRoster() {
   window.location = "create-player.html";
   return false;
 }
 
+// Delete the player that the user selects to delete from the roster
 function deletePlayer(element) {
   var email;
   firebase.auth().onAuthStateChanged(function(user) {
@@ -1030,6 +1042,7 @@ function deletePlayer(element) {
   });
 }
 
+// Show the profile with player statistics when the user clicks on the player's name
 function displayProfile(element) {
   var num = element.name;
   console.log(num);
@@ -1043,6 +1056,9 @@ function displayProfile(element) {
 }
 
 
+/*FUNCTIONS FOR LOGGIN USER OUT*/
+
+// Log the user out of the app and take them to the login page
 function logOff() {
   firebase.auth().signOut().then(function() {
     console.log("Sign off successful");
@@ -1052,46 +1068,15 @@ function logOff() {
   });
 }
 
-function DSE(element) {
-  var eventName = element.nextElementSibling.innerHTML;
-  firebase.auth().onAuthStateChanged(function(user) {
-    if(user) {
-      email = user.email.replace(/[^a-zA-Z0-9 ]/g,"");
-      db.doc("/users/"+email).get().then(function(querySnapshot) {
-        team = querySnapshot.data().team;
-        db.doc('teams/'+team+'/schedule/'+eventName).delete().then(function() {
-          location.reload();
-        }).catch(function(error) {
-          console.error("Error removing document: ", error);
-        });
-      });
-    }
-  });
-}
 
+/*FUNCTIONS FOR SCHEDULE*/
 
-
-
-function displaystat (element) {
-  if(!element.parentElement.parentElement.nextElementSibling.style.display) {
-    element.parentElement.parentElement.nextElementSibling.style.display = 'block';
-    element.nextElementSibling.style.display = 'block';
-    element.style.display = 'none';
-  }
-  else {
-    element.parentElement.parentElement.nextElementSibling.style.display = '';
-    element.previousElementSibling.style.display = 'block';
-    element.style.display = 'none';
-  }
-}
-
-
-//FUNCTIONS FOR SCHEDULE
-
+// Initialize the create schedule page by hiding the practice event creation form
 function loadCreateSchedule() {
   document.getElementById('practice-other-form').style.display = 'none';
 }
 
+// Show the user the form to create a game when the game tab is selected
 function showGameFields() {
   if(document.getElementById('nav_create_game').classList.contains('active')) {
     return false;
@@ -1110,6 +1095,7 @@ function showGameFields() {
   }
 }
 
+// Show the user the form to create a practice event when the practice tab is selected
 function showPracticeFields() {
   if(document.getElementById('nav_create_game').classList.contains('active')) {
     document.getElementById('nav_create_practice').classList.add('active');
@@ -1126,6 +1112,7 @@ function showPracticeFields() {
   }
 }
 
+// Show the user the form to create a general event when the other tab is selected
 function showOtherFields() {
   if(document.getElementById('nav_create_game').classList.contains('active')) {
     document.getElementById('nav_create_other').classList.add('active');
@@ -1142,6 +1129,7 @@ function showOtherFields() {
   }
 }
 
+// Add the information for a new game event to firestore after the user submits
 function createGame() {
   if(document.getElementById('opponent').value && document.getElementById('location').value &&
   document.getElementById('start-date').value && document.getElementById('start-time').value) {
@@ -1176,6 +1164,7 @@ function createGame() {
   }
 }
 
+// Add the information for a practice/general event to firestore after the user submits
 function createOther() {
   if(document.getElementById('title').value && document.getElementById('location-prac').value &&
   document.getElementById('start-date-prac').value && document.getElementById('start-time-prac').value) {
@@ -1212,6 +1201,7 @@ function createOther() {
   }
 }
 
+// Initialize the schedule page to display the future events in firestore
 function loadSchedule() {
   firebase.firestore().enablePersistence()
   .then(function() {
@@ -1275,26 +1265,27 @@ function loadSchedule() {
       if (err.code == 'failed-precondition') {
           // Multiple tabs open, persistence can only be enabled
           // in one tab at a a time.
-          // ...
       } else if (err.code == 'unimplemented') {
           // The current browser does not support all of the
           // features required to enable persistence
-          // ...
       }
   });
 }
 
+// Take the user to the creating event page when the user clicks on the add button
 function addToSchedule() {
   window.location = "create-event.html";
   return false;
 }
 
+// Take the user to the edit event page when the user clicks on the edit button
 function displayEditEvent(element) {
   localStorage.setItem('editEvent', element.name);
   window.location = "edit-event.html";
   return false;
 }
 
+// Initialize the edit schedule page by displaying previous information for the event
 function loadEditSchedule() {
   firebase.firestore().enablePersistence()
   .then(function() {
@@ -1351,15 +1342,14 @@ function loadEditSchedule() {
       if (err.code == 'failed-precondition') {
           // Multiple tabs open, persistence can only be enabled
           // in one tab at a a time.
-          // ...
       } else if (err.code == 'unimplemented') {
           // The current browser does not support all of the
           // features required to enable persistence
-          // ...
       }
   });
 }
 
+// Update the information for a game event when the user is done updating
 function editGame() {
   if(document.getElementById('opponent').value && document.getElementById('location').value &&
   document.getElementById('start-date').value && document.getElementById('start-time').value) {
@@ -1401,7 +1391,7 @@ function editGame() {
   }
 }
 
-
+// Update the information for a practice/general event when the user is done updating
 function editOther() {
   if(document.getElementById('title').value && document.getElementById('location-prac').value &&
   document.getElementById('start-date-prac').value && document.getElementById('start-time-prac').value) {
@@ -1447,6 +1437,7 @@ function editOther() {
   }
 }
 
+// Delete an event from firestore that the user specifies
 function deleteEvent(element) {
   var email;
   firebase.auth().onAuthStateChanged(function(user) {
