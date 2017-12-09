@@ -5,6 +5,9 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" href="bootstrap.css" />
   <script src="jquery-3.2.1.slim.min.js"></script>
+  <script src="firebase.js"></script>
+  <script src="firebase-firestore.js"></script>
+  <script type="text/javascript" src="app.js"></script>
   <!--
   Filename: schedule-admin.html
 
@@ -16,7 +19,8 @@
 <body>
   <div class="container container-index" id="cont">
     <nav class="navbar">
-      <a class="addbtn moreButton" type="button" href="#" onclick="toggleSignOut()" data-toggle="modal" data-target="#logModal"><img src="more.svg"/></a>
+
+      <a class="addbtn moreButton" type="button" href="#" data-toggle="modal" data-target="#logModal"><img src="more.svg"/></a>
 
       <div class="modal fade" id="logModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -33,6 +37,7 @@
           </div>
         </div>
       </div>
+
       <ul class="nav nav-pills nav-fill">
         <li class="nav-item">
           <a  id="nav_a" class="nav-link" href="statistics-admin.html"><img src="bar-chart.svg" /></a>
@@ -70,10 +75,8 @@
       <hr>
     </div>
   </div>
-
-  <script src="firebase.js"></script>
-  <script src="firebase-firestore.js"></script>
-  <script type="text/javascript" src="app.js"></script>
+  <script src="popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="bootstrap.min.js"></script>
   <script>
   loadSchedule();
   </script>
