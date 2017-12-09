@@ -3,15 +3,18 @@
 <head>
   <title>Edit Statistics</title>
   <meta charset="utf-8" />
-
-
   <link rel="stylesheet" href="bootstrap.css" />
-
   <script src="jquery-3.2.1.slim.min.js"></script>
   <script src="firebase.js"></script>
   <script src="firebase-firestore.js"></script>
   <script src="app.js"></script>
+  <!--
+  Filename: edit-statistics.html
 
+  Description: This file allows the user to edit statistics for any given event.
+
+  Offline: User will not be be allowed to save their changes when offline. Will be allowed to see the data offline when coming back to the page if the page was visited before.
+-->
 </head>
 <body>
   <!-- Remove this comment when done -->
@@ -21,58 +24,58 @@
     <div class="row">
       <div class="col align-self-center">
         <form class="form-div">
-            <h6 id="warning"></h6>
-            <div class="form-group">
+          <h6 id="warning"></h6>
+          <div class="form-group">
             <label>Win/Loss</label><br>
-              <select id="winorloss" class="custom-select mb-2 mr-sm-2 mb-sm-0" name="options">
-                <option value="win">Win</option>
-                <option value="loss">Loss</option>
-                <option value="tie">Tie</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Home Score</label>
-              <input id="homescore" type="number" class="form-control" placeholder="Points">
-            </div>
-            <div class="form-group">
-              <label>Opponent Score</label>
-              <input id="awayscore" type="number" class="form-control" placeholder="Points">
-            </div>
-            <div class="form-group">
-              <label>Fouls</label>
-              <input id="fouls" type="number" class="form-control" placeholder="Fouls">
-            </div>
-            <div class="form-group">
-              <label>Cards</label>
-              <input id="cards" type="number" class="form-control" placeholder="Cards">
-            </div>
-            <div class="form-group">
-              <label>Shots on Goal</label>
-              <input id="shotsongoal" type="number" class="form-control" placeholder="Shots">
-            </div>
-            <div class="form-group">
-              <label>Goals Made</label>
-              <input id="goalsmade" type="number" class="form-control" placeholder="Goals">
-            </div>
-            <div class="form-group">
-              <label>Corner Kicks</label>
-              <input id="cornerkicks" type="number" class="form-control" placeholder="Corner Kicks">
-            </div>
-            <div class="form-group">
-              <label>Goal Kicks</label>
-              <input id="goalkicks" type="number" class="form-control" placeholder="Goal Kicks">
-            </div>
-            <div class="form-group">
-              <label>Possession Time (minutes)</label>
-              <input id="posstime" type="number" class="form-control" placeholder="Possession Time">
-            </div>
+            <select id="winorloss" class="custom-select mb-2 mr-sm-2 mb-sm-0" name="options">
+              <option value="win">Win</option>
+              <option value="loss">Loss</option>
+              <option value="tie">Tie</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Home Score</label>
+            <input id="homescore" type="number" class="form-control" placeholder="Points">
+          </div>
+          <div class="form-group">
+            <label>Opponent Score</label>
+            <input id="awayscore" type="number" class="form-control" placeholder="Points">
+          </div>
+          <div class="form-group">
+            <label>Fouls</label>
+            <input id="fouls" type="number" class="form-control" placeholder="Fouls">
+          </div>
+          <div class="form-group">
+            <label>Cards</label>
+            <input id="cards" type="number" class="form-control" placeholder="Cards">
+          </div>
+          <div class="form-group">
+            <label>Shots on Goal</label>
+            <input id="shotsongoal" type="number" class="form-control" placeholder="Shots">
+          </div>
+          <div class="form-group">
+            <label>Goals Made</label>
+            <input id="goalsmade" type="number" class="form-control" placeholder="Goals">
+          </div>
+          <div class="form-group">
+            <label>Corner Kicks</label>
+            <input id="cornerkicks" type="number" class="form-control" placeholder="Corner Kicks">
+          </div>
+          <div class="form-group">
+            <label>Goal Kicks</label>
+            <input id="goalkicks" type="number" class="form-control" placeholder="Goal Kicks">
+          </div>
+          <div class="form-group">
+            <label>Possession Time (minutes)</label>
+            <input id="posstime" type="number" class="form-control" placeholder="Possession Time">
+          </div>
 
-            <div class="form-group text-center save-exit">
-              <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="editStats()">
-            </div>
-            <div class="form-group exit">
-              <h6 align="center"><a href="statistics-admin.html">Exit</a></h6>
-            </div>
+          <div class="form-group text-center save-exit">
+            <input type="button" value="Save & Exit" class="btn btn-primary login" onclick="editStats()">
+          </div>
+          <div class="form-group exit">
+            <h6 align="center"><a href="statistics-admin.html">Exit</a></h6>
+          </div>
         </form>
       </div>
     </div>

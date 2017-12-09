@@ -6,6 +6,13 @@
 	<title>Sign Up</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
 	<script src="jquery-3.2.1.slim.min.js"></script>
+	<!--
+	Filename: register.html
+
+	Description: The following page is for creating a new account. The user is able to register an account for a new team or for an already existing account. If registering for a new team, the user will be prompted to choose the team name, city, and school name.
+
+	Offline: User won't be able to register if offline.
+-->
 </head>
 <body>
 	<div class="container signup-div">
@@ -14,64 +21,64 @@
 			<div class="col align-self-center">
 				<form class="form-div">
 					<h6 id="warningregister"></h6>
-				 	<div class="form-group">
-				 		<label>Username</label>
-				    	<input id="username" type="text" class="form-control" placeholder="Username">
-				  	</div>
-				  	<div class="form-group">
-				  		<label>Email</label>
-				    	<input id="email" type="text" class="form-control" placeholder="example@email.com">
-				  	</div>
-				  	<div class="form-group">
-				  		<label>Password</label>
-				    	<input id="password" type="password" class="form-control" placeholder="Password">
-				  	</div>
-				  	<div class="form-group">
-				  		<label>Confirm Password</label>
-				    	<input id="confirmpassword" type="password" class="form-control" placeholder="Confirm Password">
-				  	</div>
-				  	<nav class="navbar">
-				      <ul class="nav nav-pills nav-fill">
-				        <li class="nav-item active">
-				          <a id="nav_existing" class="nav-link active" onclick="showExistingTeam()">Join Existing Team</a>
-				        </li>
-				        <li class="nav-item">
-				          <a id="nav_new" class="nav-link" onclick="showNewTeam()">Create New Team</a>
-				        </li>
-				      </ul>
-				    </nav>
-				  	<div id="existing-team-signup" class="group">
-				  		<div class="form-group">
-				  			<label>Team</label></br>
-			              	<select id="jointeam" class="custom-select mb-2 mr-sm-2 mb-sm-0" name="options">
-			              	</select>
-				  		</div>
-				  		<div class="form-group save-exit text-center">
-				    		<input type="button" value="Register" class="btn btn-primary login" onclick="registerExisting()">
-				  		</div>
-				  		<div class="form-group text-center exit">
-				  			<label><a href="login.html" style="padding: 0; margin: 0;">Exit</a></label>
-				  		</div>
-				  	</div>
+					<div class="form-group">
+						<label>Username</label>
+						<input id="username" type="text" class="form-control" placeholder="Username">
+					</div>
+					<div class="form-group">
+						<label>Email</label>
+						<input id="email" type="text" class="form-control" placeholder="example@email.com">
+					</div>
+					<div class="form-group">
+						<label>Password</label>
+						<input id="password" type="password" class="form-control" placeholder="Password">
+					</div>
+					<div class="form-group">
+						<label>Confirm Password</label>
+						<input id="confirmpassword" type="password" class="form-control" placeholder="Confirm Password">
+					</div>
+					<nav class="navbar">
+						<ul class="nav nav-pills nav-fill">
+							<li class="nav-item active">
+								<a id="nav_existing" class="nav-link active" onclick="showExistingTeam()">Join Existing Team</a>
+							</li>
+							<li class="nav-item">
+								<a id="nav_new" class="nav-link" onclick="showNewTeam()">Create New Team</a>
+							</li>
+						</ul>
+					</nav>
+					<div id="existing-team-signup" class="group">
+						<div class="form-group">
+							<label>Team</label></br>
+							<select id="jointeam" class="custom-select mb-2 mr-sm-2 mb-sm-0" name="options">
+							</select>
+						</div>
+						<div class="form-group save-exit text-center">
+							<input type="button" value="Register" class="btn btn-primary login" onclick="registerExisting()">
+						</div>
+						<div class="form-group text-center exit">
+							<label><a href="login.html" style="padding: 0; margin: 0;">Exit</a></label>
+						</div>
+					</div>
 					<div id="new-team-signup" class="group">
 						<div class="form-group">
 							<label>Team</label>
-				    		<input id="team-new" type="text" class="form-control" placeholder="Team">
-				 		</div>
-				 		<div class="form-group">
-				 			<label>City</label>
-				    		<input type="text" class="form-control" placeholder="City">
-				 		</div>
-				 		<div class="form-group">
-				 			<label>School</label>
-				    		<input type="text" class="form-control" placeholder="School">
-				 		</div>
-				 		<div class="form-group save-exit text-center">
-				    		<input type="button" value="Register" class="btn btn-primary login" onclick="registerNew()">
-				  		</div>
-				  		<div class="form-group text-center exit">
-				  			<label><a href="login.html" style="padding: 0; margin: 0;">Exit</a></label>
-				  		</div>
+							<input id="team-new" type="text" class="form-control" placeholder="Team">
+						</div>
+						<div class="form-group">
+							<label>City</label>
+							<input type="text" class="form-control" placeholder="City">
+						</div>
+						<div class="form-group">
+							<label>School</label>
+							<input type="text" class="form-control" placeholder="School">
+						</div>
+						<div class="form-group save-exit text-center">
+							<input type="button" value="Register" class="btn btn-primary login" onclick="registerNew()">
+						</div>
+						<div class="form-group text-center exit">
+							<label><a href="login.html" style="padding: 0; margin: 0;">Exit</a></label>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -83,6 +90,6 @@
 <script src="firebase-firestore.js"></script>
 <script type="text/javascript" src="app.js"></script>
 <script>
-	loadRegister();
+loadRegister();
 </script>
 </html>

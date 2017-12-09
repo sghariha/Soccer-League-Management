@@ -5,6 +5,13 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" href="bootstrap.css" />
   <script src="jquery-3.2.1.slim.min.js"></script>
+  <!--
+  Filename: schedule-admin.html
+
+  Description: The following file displays future events (games/practices/other). The user is allowed to create, edit, and delete any given event. The event will not show up if it already occurred.
+
+  Offline: If the page is loaded, then the user will be able to come back to this file. The user will not be able to create or delete any event while offline.
+-->
 </head>
 <body>
   <div class="container container-index" id="cont">
@@ -44,7 +51,8 @@
         <input type="button" value="Add Event" class="btn btn-primary login" onclick="addToSchedule()">
       </div>
     </div>
-    <div id="eventrow0" class="eventtemplate">
+
+    <div id="eventrow0" class="eventtemplate" style="margin-top: 50px;">
       <div class="row">
         <div class="col-sm-8">
           <h5 class="eventtitle"></h5>
@@ -67,7 +75,7 @@
   <script src="firebase-firestore.js"></script>
   <script type="text/javascript" src="app.js"></script>
   <script>
-    loadSchedule();
+  loadSchedule();
   </script>
 </body>
 </html>

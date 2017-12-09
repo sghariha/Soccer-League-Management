@@ -3,13 +3,19 @@
 <head>
   <title>Statistics</title>
   <meta charset="utf-8" />
-
-
   <link rel="stylesheet" href="bootstrap.css" />
   <script src="jquery-3.2.1.slim.min.js"></script>
   <script src="firebase.js"></script>
   <script src="firebase-firestore.js"></script>
   <script src="app.js"></script>
+
+  <!--
+  Filename: statistics-admin.html
+
+  Description: The following file displays stats of games that have already occurred. The user is allowed to add, edit, and delete stats for any of the displayed events.
+
+  Offline: If the user is offline they will be able to go back to the file, but won't be allowed to add, edit, or delete any statistics.
+-->
 
 </head>
 <body>
@@ -90,107 +96,81 @@
         </div>
       </div>
 
-      <!-- Year Drop Down
-      <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      2017
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">2016</a>
-    <a class="dropdown-item" href="#">2015</a>
-  </div>
-</div> -->
+      <template id="eventrow">
+        <div class="row">
+          <div class="col-2 hidden" style="display: none;">
+            <a href="#"value="" onclick="DSE(this)"><img src="remove.svg" style="height:20px;"/></a>
+            <a class="remove-button" style="display:none;"></a>
+            <a class="editbtn" href="#" onclick="editstats(this)">Edit</a>
+            <a class="addbtn" href="#" onclick="addstats(this)">Add</a>
+          </div>
 
+          <div class="col-2 mid" style="">
+            <h6 class="event-date" style="font-weight:900; margin-bottom: 5px; margin-top: 2px;"></h6>
+            <h6 class="event-day" style="font-weight: 900;"></h6>
+          </div>
 
-<!-- Score -->
+          <div class="col-10 right" style="">
+            <h5 class="playernameheader"><a class="statname" href="#"></a></h5>
+            <span class="location"></span> &nbsp;
+            <span class="time"></span>
+            <h6 class="overallscore"></h6>
+            <input type="button" value="More" class="btn btn-primary login" onclick="displaystat(this)">
+            <input type="button" value="Less" style="display: none;" class="btn btn-primary login" onclick="displaystat(this)">
+          </div>
+        </div>
+        <div class="row statrow">
+          <div class="col-sm-12">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Game Statistic</th>
+                  <th scope="col">Game Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Fouls</td>
+                  <td class="sfoul"></td>
+                </tr>
+                <tr>
+                  <td>Cards</td>
+                  <td class="scards"></td>
+                </tr>
+                <tr>
+                  <td>Shots on Goal</td>
+                  <td class="ssog"></td>
+                </tr>
+                <tr>
+                  <td>Goals</td>
+                  <td class="sg"></td>
+                </tr>
+                <tr>
+                  <td>Corner Kicks</td>
+                  <td class="scka"></td>
+                </tr>
+                <tr>
+                  <td>Goal Kicks</td>
+                  <td class="sgka"></td>
+                </tr>
+                <tr>
+                  <td>Possession Time</td>
+                  <td class="spt"></td>
+                </tr>
+              </tbody>
+            </table>
 
-<!-- Game -->
+          </div>
+        </div>
+      </template>
 
-<template id="eventrow">
-  <div class="row">
-    <div class="col-2 hidden" style="display: none;">
-      <a href="#"value="" onclick="DSE(this)"><img src="remove.svg" style="height:20px;"/></a>
-      <a class="remove-button" style="display:none;"></a>
-      <a class="editbtn" href="#" onclick="editstats(this)">Edit</a>
-      <a class="addbtn" href="#" onclick="addstats(this)">Add</a>
     </div>
-    <!--
-    Left:
-    - date
-    - Day of the week
-  -->
-  <div class="col-2 mid" style="">
-    <h6 class="event-date" style="font-weight:900; margin-bottom: 5px; margin-top: 2px;"></h6>
-    <h6 class="event-day" style="font-weight: 900;"></h6>
   </div>
+  <script src="popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="bootstrap.min.js"></script>
 
-  <!--
-  Right:
-  - title
-  - location
-  - time
--->
-<div class="col-10 right" style="">
-  <h5 class="playernameheader"><a class="statname" href="#"></a></h5>
-  <span class="location"></span> &nbsp;
-  <span class="time"></span>
-  <h6 class="overallscore"></h6>
-  <input type="button" value="More" class="btn btn-primary login" onclick="displaystat(this)">
-  <input type="button" value="Less" style="display: none;" class="btn btn-primary login" onclick="displaystat(this)">
-</div>
-</div>
-<div class="row statrow">
-  <div class="col-sm-12">
-    <table class="table table-sm">
-      <thead>
-        <tr>
-          <th scope="col">Game Statistic</th>
-          <th scope="col">Game Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Fouls</td>
-          <td class="sfoul"></td>
-        </tr>
-        <tr>
-          <td>Cards</td>
-          <td class="scards"></td>
-        </tr>
-        <tr>
-          <td>Shots on Goal</td>
-          <td class="ssog"></td>
-        </tr>
-        <tr>
-          <td>Goals</td>
-          <td class="sg"></td>
-        </tr>
-        <tr>
-          <td>Corner Kicks</td>
-          <td class="scka"></td>
-        </tr>
-        <tr>
-          <td>Goal Kicks</td>
-          <td class="sgka"></td>
-        </tr>
-        <tr>
-          <td>Possession Time</td>
-          <td class="spt"></td>
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
-</div>
-</template>
-
-</div>
-</div>
-<script src="popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="bootstrap.min.js"></script>
-
-<script>
-loadStats();
+  <script>
+  loadStats();
 </script>
 </body>
 </html>
